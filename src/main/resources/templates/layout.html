@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>Layout</title>
+    <meta charset='utf-8'/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" type="text/css" href="/css/app.css" th:href="@{/css/app.css}"/>
+</head>
+<body>
+<header>
+  <div>
+
+    <input type="hidden" name="locale" th:value="__${#locale}__"/>
+
+    <img class="logo pull-left" th:src="@{/images/logo.png}"/>
+    <div class="name" sec:authentication="principal">Bob</div>
+    <div th:text="${#authentication}">
+      The value of the "name" property of the authentication object should appear here.
+    </div>
+  </div>
+
+  <div class='pull-right'>
+    <ul class="language">
+      <li><a th:class="__${#locale}__ == 'en' ? 'active' : ''" href="/?lang=en">EN</a></li>
+      <li><a th:class="__${#locale}__ == 'nl' ? 'active' : ''" href="/?lang=nl">NL</a></li>
+    </ul>
+  </div>
+
+  <a href='https://github.com/OpenConext/OpenConext-attribute-aggregation' target='_blank'>
+    <img class="logo pull-left" th:src="@{/images/github.png}"/>
+  </a>
+  <a href='https://www.pivotaltracker.com/n/projects/1501602' target='_blank'>
+    <img class="logo pull-left" th:src="@{/images/pivotaltracker.png}"/>
+  </a>
+</header>
+<div layout:fragment="content">
+</div>
+<script type="text/javascript" th:src="@{/js/app.js}"></script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+.header {
+  padding: 25px 30px 10px;
+  background: white;
+  border-bottom: 2px solid $blue;
+  position: relative;
+
+  @include clearFix;
+}
+
+// Main app title
+.title {
+  background: url(../images/logo@2x.png) no-repeat left center;
+  background-size: 160px 50px;
+  height: 50px;
+  float: left;
+  font-size: 26.5px;
+  line-height: 29px;
+  -webkit-font-smoothing: antialiased;
+
+  a {
+    color: $blue;
+    text-decoration: none;
+    padding-left: 190px;
+    &:hover {
+      color: $blue;
+      text-decoration: none;
+    }
+  }
+  span {
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 12px;
+  }
+}
+
+.logo {
+  width: 26px;
+  height: 26px;
+  float: right;
+  margin: 2px 5px 0 0;
+  display: inline-block;
+}
+
+.meta {
+  float: right;
+}
+
+.name {
+  color: $blue;
+  margin-right: 40px;
+  float: left;
+  line-height: 32px;
+}
+
+
+.language {
+  display: inline;
+  overflow: hidden;
+  margin-right: 40px;
+  line-height: 30px;
+  font-size: 14px;
+  li {
+    float: left;
+    list-style: none;
+  }
+  a {
+    display: block;
+    padding: 0 14px;
+    background: $light-grey;
+    border-color: white;
+    text-decoration: none;
+    &:hover {
+      background: $blue;
+      color: white;
+      text-decoration: none;
+    }
+  }
+  li:first-child a {
+    border-right: 1px solid $light-grey;
+    border-top-left-radius: $br;
+    border-bottom-left-radius: $br;
+  }
+  li:nth-child(2) a {
+    border-top-right-radius: $br;
+    border-bottom-right-radius: $br;
+  }
+}
