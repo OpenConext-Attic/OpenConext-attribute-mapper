@@ -1,1 +1,1 @@
-DELETE FROM USERS;
+DELETE FROM attribute_mapper.users;
