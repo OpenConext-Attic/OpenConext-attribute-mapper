@@ -11,6 +11,7 @@ import java.io.IOException;
 
 public class DefaultMetadataDisplayFilter extends MetadataDisplayFilter {
 
+  @Override
   protected void processMetadataDisplay(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
     try {
       SAMLMessageContext context = contextProvider.getLocalEntity(request, response);
