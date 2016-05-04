@@ -12,6 +12,7 @@ import org.opensaml.xml.parse.StaticBasicParserPool;
 import org.opensaml.xml.parse.XMLParserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.security.saml.metadata.ExtendedMetadataDelegate;
 
@@ -23,11 +24,14 @@ public class ResourceMetadataProviderTest extends AbstractIntegrationTest {
   @Qualifier("central-idp")
   private MetadataProvider metadataProvider;
 
+  @Value("${central_idp.entity_id}")
+  private String centralIdpEntityId;
+
   @Test
   public void test() throws MetadataProviderException, XMLParserException, ConfigurationException {
     EntityDescriptor entityDescriptor = (EntityDescriptor) metadataProvider.getMetadata();
     String entityID = entityDescriptor.getEntityID();
-    assertEquals("http://mock-idp", entityID);
+    assertEquals(centralIdpEntityId, entityID);
   }
 
 }

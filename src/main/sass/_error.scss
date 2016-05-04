@@ -1,0 +1,11 @@
+.error {
+  @extend .box;
+
+  &.notFound {
+    text-align: center;
+    p {
+      font-size: 96px;
+    }
+  }
+
+}

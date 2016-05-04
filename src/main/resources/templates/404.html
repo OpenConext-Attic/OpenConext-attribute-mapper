@@ -4,20 +4,15 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
       layout:decorator="layout">
 <head>
-  <title th:text="#{am.title}"></title>
+  <title th:text="#{am.error}"></title>
 </head>
 <body>
 <div layout:fragment="content">
 
-  <section class="welcome">
-    <h3 th:text="#{am.welcome}"></h3>
-    <p th:text="#{am.intro}"></p>
-    <div sec:authorize="!hasRole('ROLE_USER')">
-      <a class="button_submit_large" th:text="#{am.login_central_idp}" th:href="@{/saml/login}">Login</a>
-    </div>
+  <section class="error notFound">
+    <h3 th:text="#{am.page_not_found}"></h3>
+    <p>404</p>
   </section>
-
-
 
 </div>
 </body>

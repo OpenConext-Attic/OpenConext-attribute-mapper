@@ -4,6 +4,8 @@
  * 1. Change the default font family in all browsers (opinionated).
  * 2. Prevent adjustments of font size after orientation changes in IE and iOS.
  */
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,700,400italic,700italic");
+@import url("https://fonts.googleapis.com/css?family=Roboto+Mono:400,300");
 html {
   font-family: sans-serif;
   /* 1 */
@@ -366,77 +368,223 @@ textarea {
   /* 2 */ }
 
 /* _variables.scss */
-.header {
-  padding: 25px 30px 10px;
-  background: white;
-  border-bottom: 2px solid #4db3cf;
-  position: relative; }
-  .header:after {
-    content: "";
-    display: table;
-    clear: both; }
+/* _variables.scss */
+*, :after, :before {
+  box-sizing: border-box; }
 
-.title {
-  background: url(../images/logo@2x.png) no-repeat left center;
-  background-size: 160px 50px;
-  height: 50px;
-  float: left;
-  font-size: 26.5px;
-  line-height: 29px;
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  overflow-x: hidden;
+  background: #efefee;
+  font-family: "Roboto", Sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #2b3f44;
   -webkit-font-smoothing: antialiased; }
-  .title a {
+
+a {
+  color: #4db3cf; }
+
+.box, .welcome, .mappingsBox, .error {
+  padding: 50px;
+  margin: 25px 40px 15px 40px;
+  border-radius: 6px;
+  background-color: white;
+  box-shadow: 5px 5px 5px 0px #a2a2a2; }
+  .box h3, .welcome h3, .mappingsBox h3, .error h3 {
+    font-size: 28px;
+    color: #4db3cf;
+    margin: 0px 0px 15px 0px; }
+  .box p, .welcome p, .mappingsBox p, .error p {
+    margin-bottom: 25px;
+    display: inline-block; }
+
+header {
+  height: 90px;
+  padding: 25px 15px 0px 20px;
+  background: white;
+  border-bottom: 2px solid #4db3cf; }
+  header .title {
+    background: url(../images/logo.png) no-repeat left center;
+    background-size: 160px 50px;
+    height: 50px;
+    float: left;
+    font-size: 26.5px;
+    line-height: 29px;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
     color: #4db3cf;
     text-decoration: none;
     padding-left: 190px; }
-    .title a:hover {
+    header .title:hover {
       color: #4db3cf;
       text-decoration: none; }
-  .title span {
-    display: inline-block;
-    margin-left: 10px;
-    font-size: 12px; }
+    header .title:visited {
+      color: #4db3cf; }
+  header .meta {
+    float: right; }
+    header .meta .logo {
+      width: 26px;
+      height: 26px;
+      float: right;
+      margin: 2px 5px 0 0;
+      display: inline-block; }
+    header .meta .name {
+      color: #4db3cf;
+      margin-right: 40px;
+      float: left;
+      line-height: 32px; }
+    header .meta a.logout {
+      margin: 0px 30px 0px 20px;
+      line-height: 30px;
+      font-size: 14px;
+      text-decoration: none;
+      float: right; }
+    header .meta .language {
+      display: inline-block;
+      margin: 0px 50px 0px 0px;
+      line-height: 30px;
+      font-size: 14px; }
+      header .meta .language li {
+        float: left;
+        list-style: none; }
+      header .meta .language a {
+        display: block;
+        padding: 0 14px;
+        background: #efefee;
+        border-color: white;
+        text-decoration: none; }
+        header .meta .language a:hover {
+          background: #4db3cf;
+          color: white;
+          text-decoration: none; }
+        header .meta .language a.active {
+          color: white;
+          background: #4db3cf; }
+      header .meta .language li:first-child a {
+        border-right: 1px solid #efefee;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px; }
+      header .meta .language li:nth-child(2) a {
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px; }
 
-.logo {
-  width: 26px;
-  height: 26px;
-  float: right;
-  margin: 2px 5px 0 0;
-  display: inline-block; }
+.button, .button_white, .button_white_disabled, .button_full_disabled, .button_full, .button_submit, .button_submit_large, .button_submit_small, .button_disabled, .button_submit_disabled, .button_submit_small_disabled, .button_narrow, .button_cancel, .button_cancel_large {
+  background: #4db3cf;
+  padding: 7px 15px;
+  border: 1px solid #4db3cf;
+  border-radius: 5px;
+  color: white;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center; }
+  .button:hover, .button_white:hover, .button_white_disabled:hover, .button_full_disabled:hover, .button_full:hover, .button_submit:hover, .button_submit_large:hover, .button_submit_small:hover, .button_disabled:hover, .button_submit_disabled:hover, .button_submit_small_disabled:hover, .button_narrow:hover, .button_cancel:hover, .button_cancel_large:hover {
+    background: #319bb8;
+    text-decoration: underline; }
+  .button i, .button_white i, .button_white_disabled i, .button_full_disabled i, .button_full i, .button_submit i, .button_submit_large i, .button_submit_small i, .button_disabled i, .button_submit_disabled i, .button_submit_small_disabled i, .button_narrow i, .button_cancel i, .button_cancel_large i {
+    margin-right: 10px; }
 
-.meta {
-  float: right; }
-
-.name {
+.button_white, .button_white_disabled, .button_full_disabled, .button_full {
   color: #4db3cf;
-  margin-right: 40px;
-  float: left;
-  line-height: 32px; }
+  background-color: white; }
+  .button_white:hover, .button_white_disabled:hover, .button_full_disabled:hover, .button_full:hover {
+    background: #e6e6e6; }
 
-.language {
-  display: inline;
-  overflow: hidden;
-  margin-right: 40px;
-  line-height: 30px;
-  font-size: 14px; }
-  .language li {
+.button_white_disabled, .button_full_disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: default; }
+
+.button_submit, .button_submit_large {
+  width: 180px;
+  font-size: larger; }
+
+.button_submit_large {
+  width: 240px; }
+
+.button_submit_small {
+  width: 110px; }
+
+.button_disabled, .button_submit_disabled, .button_submit_small_disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: default; }
+
+.button_submit_disabled {
+  width: 180px; }
+
+.button_submit_small_disabled {
+  width: 110px; }
+
+.button_full {
+  margin: auto 0; }
+
+.button_full_disabled {
+  margin: auto 0; }
+
+.button_narrow {
+  padding: 3px 10px; }
+
+.button_cancel, .button_cancel_large {
+  background: white;
+  color: #a2a2a2;
+  border: 1px solid #a2a2a2;
+  margin-left: 15px; }
+  .button_cancel:hover, .button_cancel_large:hover {
+    background: #e6e6e6;
+    text-decoration: underline; }
+
+.button_cancel_large {
+  width: 140px; }
+
+nav {
+  background: #4db3cf;
+  display: inline-block;
+  width: 100%; }
+  nav ul {
+    margin: 0px; }
+  nav li {
     float: left;
     list-style: none; }
-  .language a {
-    display: block;
-    padding: 0 14px;
-    background: #efefee;
-    border-color: white;
-    text-decoration: none; }
-    .language a:hover {
-      background: #4db3cf;
-      color: white;
-      text-decoration: none; }
-  .language li:first-child a {
-    border-right: 1px solid #efefee;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px; }
-  .language li:nth-child(2) a {
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px; }
+    nav li a {
+      color: #fff;
+      padding: 20px;
+      display: block;
+      text-decoration: none;
+      font-size: 20px;
+      line-height: 30px;
+      -webkit-font-smoothing: antialiased; }
+      nav li a.active {
+        font-weight: bold; }
+    nav li:first-child a {
+      padding-left: 0; }
+    nav li:last-child {
+      float: right;
+      margin-bottom: 10px;
+      margin-right: 15px; }
+      nav li:last-child a {
+        padding: 6px 20px;
+        margin-top: 12px;
+        margin-right: 10px;
+        border: solid 1px white;
+        border-radius: 5px;
+        font-size: 20px; }
+
+.mappingsBox em {
+  font-size: larger; }
+.mappingsBox .button_submit_large {
+  margin-top: 20px; }
+
+div.mappings {
+  display: flex;
+  border-bottom: 1px solid #a2a2a2; }
+
+.error.notFound {
+  text-align: center; }
+  .error.notFound p {
+    font-size: 96px; }
 
 /*# sourceMappingURL=app.css.map */

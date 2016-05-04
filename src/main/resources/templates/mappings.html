@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      layout:decorator="layout">
+<head>
+  <title th:text="#{am.title}"></title>
+</head>
+<body>
+<div layout:fragment="content">
+
+  <section class="mappingsBox">
+    <div sec:authorize="!hasRole('ROLE_MAPPED')">
+      <div>
+        <span th:text="#{am.no.mappings.pre}"></span>
+        <em th:text=" ${#authentication.principal.username} "></em>
+        <span th:text="#{am.no.mappings.post}"></span>
+      </div>
+      <a class="button_submit_large" th:text="#{am.login}" th:href="@{/saml/login}">Login</a>
+    </div>
+    <div sec:authorize="hasRole('ROLE_MAPPED')">
+      <div th:text="#{am.mappings}"></div>
+      <div class="mappings">
+        <section>
+          <img class="logo" th:src="@{/images/iden.png}"/>
+        </section>
+        <section class="connectionCreated">
+          <span th:text="#{am.mappings.connection.made}"></span>
+          <span th:text="${#authentication.principal.created}"></span>
+        </section>
+        <section class="mappingProperties">
+          <span th:text="#{am.mappings.name}"></span>
+          <span th:text="${#authentication.principal.username}"></span>
+          <span th:text="#{am.mappings.institution}"></span>
+          <span th:text="${#authentication.principal.institution}"></span>
+        </section>
+        <section class="status">
+          <span th:text="#{am.mappings.status}"></span>
+          <span th:text="#{am.mappings.connected}"></span>
+        </section>
+        <section class="disconnect">
+          <a class="button_cancel_large" th:text="#{am.am.mappings.disconnect}" th:href="@{/disconnect}">Disconnect</a>
+        </section>
+      </div>
+    </div>
+  </section>
+
+
+
+</div>
+</body>
+</html>

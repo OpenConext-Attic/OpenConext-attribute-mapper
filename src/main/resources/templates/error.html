@@ -1,13 +1,26 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-    <head>
-        <title>Error!</title>
-    </head>
-    <body>
-        <h1>Error!</h1>
-        <p>
-        	Something went wrong during the authentication process.
-        </p>
-    </body>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      layout:decorator="layout">
+<head>
+  <title th:text="#{am.error}"></title>
+</head>
+<body>
+<div layout:fragment="content">
+
+  <section class="error">
+    <h3 th:text="#{am.error}"></h3>
+    <p th:text="#{am.error_message}"></p>
+    <div th:if="${errorAttributes != null}">
+      You are seeing the details of the error because of DEV modus
+    </div>
+    <dl class="errorAttributes" th:each="error: ${errorAttributes}">
+      <dt th:text="${error.key}">key</dt>
+      <dd th:text="${error.value}">value</dd>
+    </dl>
+  </section>
+
+</div>
+</body>
 </html>

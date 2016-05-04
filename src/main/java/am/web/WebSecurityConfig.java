@@ -19,10 +19,7 @@ package am.web;
 import am.saml.*;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
-import org.apache.commons.httpclient.protocol.Protocol;
-import org.apache.commons.httpclient.protocol.ProtocolSocketFactory;
 import org.apache.velocity.app.VelocityEngine;
-import org.opensaml.saml2.metadata.provider.HTTPMetadataProvider;
 import org.opensaml.saml2.metadata.provider.MetadataProvider;
 import org.opensaml.saml2.metadata.provider.MetadataProviderException;
 import org.opensaml.xml.parse.ParserPool;
@@ -30,10 +27,8 @@ import org.opensaml.xml.parse.StaticBasicParserPool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -49,8 +44,6 @@ import org.springframework.security.saml.log.SAMLDefaultLogger;
 import org.springframework.security.saml.metadata.*;
 import org.springframework.security.saml.parser.ParserPoolHolder;
 import org.springframework.security.saml.processor.*;
-import org.springframework.security.saml.trust.httpclient.TLSProtocolConfigurer;
-import org.springframework.security.saml.trust.httpclient.TLSProtocolSocketFactory;
 import org.springframework.security.saml.util.VelocityFactory;
 import org.springframework.security.saml.websso.*;
 import org.springframework.security.web.DefaultSecurityFilterChain;
@@ -71,7 +64,10 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.spec.InvalidKeySpecException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -81,31 +77,31 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Autowired
   private DefaultSAMLUserDetailsService samlUserDetailsService;
 
-  @Value("${eb.metadata.url}")
-  private String ebMetadataUrl;
+  @Value("${surfconext_idp.metadata_url}")
+  private String surfConextMetadataUrl;
 
-  @Value("${eb.entity.id}")
-  private String ebEntityId;
+  @Value("${surfconext_idp.entity_id}")
+  private String surfConextEntityId;
 
-  @Value("${eb.public.certificate}")
-  private String ebPublicCertificate;
+  @Value("${surfconext_idp.certificate}")
+  private String surfConextPublicCertificate;
 
-  @Value("${central.idp.metadata.url}")
+  @Value("${central_idp.metadata_url}")
   private String centralIdpMetadataUrl;
 
-  @Value("${central.idp.entity.id}")
+  @Value("${central_idp.entity_id}")
   private String centralIdpEntityId;
 
-  @Value("${central.idp.certificate}")
+  @Value("${central_idp.certificate}")
   private String centralIdpCertificate;
 
-  @Value("${am.entity.id}")
+  @Value("${am.entity_id}")
   private String amEntityId;
 
-  @Value("${am.private.key}")
+  @Value("${am.private_key}")
   private String amPrivateKey;
 
-  @Value("${am.public.certificate}")
+  @Value("${am.certificate}")
   private String amPublicCertificate;
 
   @Value("${am.passphrase}")
@@ -137,6 +133,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   }
 
   @Bean
+  @Autowired
   public SAMLAuthenticationProvider samlAuthenticationProvider() {
     SAMLAuthenticationProvider samlAuthenticationProvider = new SAMLAuthenticationProvider();
     samlAuthenticationProvider.setUserDetails(samlUserDetailsService);
@@ -191,7 +188,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     keyStoreLocator.addPrivateKey(keyStore, amEntityId, amPrivateKey, amPublicCertificate, amPassphrase);
     keyStoreLocator.addCertificate(keyStore, centralIdpEntityId, centralIdpCertificate);
-    keyStoreLocator.addCertificate(keyStore, ebEntityId, ebPublicCertificate);
+    keyStoreLocator.addCertificate(keyStore, surfConextEntityId, surfConextPublicCertificate);
 
     return new JKSKeyManager(keyStore, Collections.singletonMap(amEntityId, amPassphrase), amEntityId);
   }
@@ -205,7 +202,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Bean
   public SAMLEntryPoint samlEntryPoint() {
-    SAMLEntryPoint samlEntryPoint = new DefaultSAMLEntryPoint();
+    SAMLEntryPoint samlEntryPoint = new DefaultSAMLEntryPoint(centralIdpEntityId, surfConextEntityId);
     samlEntryPoint.setDefaultProfileOptions(defaultWebSSOProfileOptions());
     return samlEntryPoint;
   }
@@ -240,7 +237,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Qualifier("eb")
   public MetadataProvider engineBlockExtendedMetadataProvider()
     throws MetadataProviderException {
-    return metadataProvider(ebMetadataUrl);
+    return metadataProvider(surfConextMetadataUrl);
   }
 
   @Bean
@@ -251,6 +248,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     providers.add(engineBlockExtendedMetadataProvider());
 
     CachingMetadataManager cachingMetadataManager = new CachingMetadataManager(providers);
+    //todo add more metadata
     return cachingMetadataManager;
   }
 
@@ -264,23 +262,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     return metadataGenerator;
   }
 
-  // The filter is waiting for connections on URL suffixed with filterSuffix
-  // and presents SP metadata there
   @Bean
   public MetadataDisplayFilter metadataDisplayFilter() {
     return new DefaultMetadataDisplayFilter();
   }
 
-  // Handler deciding where to redirect user after successful login
   @Bean
   public SavedRequestAwareAuthenticationSuccessHandler successRedirectHandler() {
     SavedRequestAwareAuthenticationSuccessHandler successRedirectHandler =
       new SavedRequestAwareAuthenticationSuccessHandler();
-    successRedirectHandler.setDefaultTargetUrl("/landing");
+    successRedirectHandler.setDefaultTargetUrl("/mappings");
     return successRedirectHandler;
   }
 
-  // Handler deciding where to redirect user after failed login
   @Bean
   public SimpleUrlAuthenticationFailureHandler authenticationFailureHandler() {
     SimpleUrlAuthenticationFailureHandler failureHandler =
@@ -290,7 +284,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     return failureHandler;
   }
 
-  // Processing filter for WebSSO profile messages
   @Bean
   public SAMLProcessingFilter samlWebSSOProcessingFilter() throws Exception {
     SAMLProcessingFilter samlWebSSOProcessingFilter = new SAMLProcessingFilter();
@@ -371,7 +364,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     return new HTTPPAOS11Binding(parserPool());
   }
 
-  // Processor
   @Bean
   public SAMLProcessorImpl processor() {
     Collection<SAMLBinding> bindings = new ArrayList<>();
@@ -383,12 +375,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     return new SAMLProcessorImpl(bindings);
   }
 
-  /**
-   * Define the security filter chain in order to support SSO Auth by using SAML 2.0
-   *
-   * @return Filter chain proxy
-   * @throws Exception
-   */
   @Bean
   public FilterChainProxy samlFilter() throws Exception {
     List<SecurityFilterChain> chains = new ArrayList<>();
@@ -411,10 +397,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     return super.authenticationManagerBean();
   }
 
-  /**
-   * Defines the web based security configuration.
-   *
-   */
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http
@@ -431,22 +413,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
       .antMatchers("/").permitAll()
       .antMatchers("/error").permitAll()
       .antMatchers("/saml/**").permitAll()
-      .anyRequest().authenticated();
+      .anyRequest().hasRole("USER");
     http
       .logout()
       .logoutSuccessUrl("/");
   }
 
-  /**
-   * Sets a custom authentication provider.
-   *
-   * @param auth SecurityBuilder used to create an AuthenticationManager.
-   * @throws Exception
-   */
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-    auth
-      .authenticationProvider(samlAuthenticationProvider());
+    auth.authenticationProvider(samlAuthenticationProvider());
   }
 
 }

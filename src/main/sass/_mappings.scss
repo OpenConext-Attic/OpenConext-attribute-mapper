@@ -1,0 +1,16 @@
+.mappingsBox {
+  @extend .box;
+
+  em {
+    font-size: larger;
+  }
+
+  .button_submit_large {
+    margin-top: 20px;
+  }
+}
+
+div.mappings {
+  display: flex;
+  border-bottom: 1px solid $medium-grey;
+}

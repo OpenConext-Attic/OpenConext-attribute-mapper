@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+                     entityID="https://idin.surfconext.nl/saml2/idp/metadata.php">
+  <md:IDPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+    <md:KeyDescriptor use="signing">
+      <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+        <ds:X509Data>
+          <ds:X509Certificate>
+            MIIDITCCAgmgAwIBAgIJAISPaYGJ9hmGMA0GCSqGSIb3DQEBCwUAMCcxJTAjBgNVBAMMHFNBTUwgSURQIFNpZ25pbmcgY2VydGlmaWNhdGUwHhcNMTYwMzEwMDkyMTM2WhcNMTYwNDA5MDkyMTM2WjAnMSUwIwYDVQQDDBxTQU1MIElEUCBTaWduaW5nIGNlcnRpZmljYXRlMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAt1x4CVJOID3XxLhb4NgO7e087QhRJBSUYkZmOXcqU7t3cqJF8HPLdiWFMB9Fo47PSzLvlRAiZ+Gp3abI9MNesqwc67et8IxhKeLBVOfQzdjhfi3/tt2mQfeHn9qFR3wDSDBdoUMSDizpGoj/KZi17L4ZJcrv3AVeMdIr7b/KWA8nXPkNfg+5142mg1V1niMHd+STNWgp1rjS+/NnHDm4grY1jPt8aSorGsCBHnyVId4wTtoZddYgZOjHQ4IsvziWloLj8QWQNWE+316DUb/Pa5yfNMVtR+red9dJOMxnXpF/yd9/Kid+Hz/MkfxoCGqZp7quCUvTY8O226A1siH3CwIDAQABo1AwTjAdBgNVHQ4EFgQUV4HjrhcvxReWlCqJB0yQMM3eQOwwHwYDVR0jBBgwFoAUV4HjrhcvxReWlCqJB0yQMM3eQOwwDAYDVR0TBAUwAwEB/zANBgkqhkiG9w0BAQsFAAOCAQEApbAC/vADC/fiepL4LsJvMI2hIYHuIyRpHvrz2x9LJauRI1YiuQzcsGpnj5IjHZlQ1YO1ZPf1CRcjEr/e4XVZH7MrGc5WCQJ9T3FGeQ9x8N7xf4B7neto2K3sZv+/sVs+OyY6S48x5+7nOnIrzWdggP9FPiVfwIzYjhMmv3IbBGb0fA7su+wKfgzNrivEQidCXjGRwr4Zp2Ec4LzxjEiwxhHE231WFwT2xCDlwDJdq4uxmQDVNvR97rhDiQzsxJjYseT9iu1U/L3UfMb+pGaPMf7kzO0NbVLJYCuzNuIrwPG/hi+PXYFz2n/dXvpOaTucElJQmdJb9aY5KQmKoXgXyw==
+          </ds:X509Certificate>
+        </ds:X509Data>
+      </ds:KeyInfo>
+    </md:KeyDescriptor>
+    <md:KeyDescriptor use="encryption">
+      <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+        <ds:X509Data>
+          <ds:X509Certificate>
+            MIIDITCCAgmgAwIBAgIJAISPaYGJ9hmGMA0GCSqGSIb3DQEBCwUAMCcxJTAjBgNVBAMMHFNBTUwgSURQIFNpZ25pbmcgY2VydGlmaWNhdGUwHhcNMTYwMzEwMDkyMTM2WhcNMTYwNDA5MDkyMTM2WjAnMSUwIwYDVQQDDBxTQU1MIElEUCBTaWduaW5nIGNlcnRpZmljYXRlMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAt1x4CVJOID3XxLhb4NgO7e087QhRJBSUYkZmOXcqU7t3cqJF8HPLdiWFMB9Fo47PSzLvlRAiZ+Gp3abI9MNesqwc67et8IxhKeLBVOfQzdjhfi3/tt2mQfeHn9qFR3wDSDBdoUMSDizpGoj/KZi17L4ZJcrv3AVeMdIr7b/KWA8nXPkNfg+5142mg1V1niMHd+STNWgp1rjS+/NnHDm4grY1jPt8aSorGsCBHnyVId4wTtoZddYgZOjHQ4IsvziWloLj8QWQNWE+316DUb/Pa5yfNMVtR+red9dJOMxnXpF/yd9/Kid+Hz/MkfxoCGqZp7quCUvTY8O226A1siH3CwIDAQABo1AwTjAdBgNVHQ4EFgQUV4HjrhcvxReWlCqJB0yQMM3eQOwwHwYDVR0jBBgwFoAUV4HjrhcvxReWlCqJB0yQMM3eQOwwDAYDVR0TBAUwAwEB/zANBgkqhkiG9w0BAQsFAAOCAQEApbAC/vADC/fiepL4LsJvMI2hIYHuIyRpHvrz2x9LJauRI1YiuQzcsGpnj5IjHZlQ1YO1ZPf1CRcjEr/e4XVZH7MrGc5WCQJ9T3FGeQ9x8N7xf4B7neto2K3sZv+/sVs+OyY6S48x5+7nOnIrzWdggP9FPiVfwIzYjhMmv3IbBGb0fA7su+wKfgzNrivEQidCXjGRwr4Zp2Ec4LzxjEiwxhHE231WFwT2xCDlwDJdq4uxmQDVNvR97rhDiQzsxJjYseT9iu1U/L3UfMb+pGaPMf7kzO0NbVLJYCuzNuIrwPG/hi+PXYFz2n/dXvpOaTucElJQmdJb9aY5KQmKoXgXyw==
+          </ds:X509Certificate>
+        </ds:X509Data>
+      </ds:KeyInfo>
+    </md:KeyDescriptor>
+    <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
+                            Location="https://idin.surfconext.nl/saml2/idp/SingleLogoutService.php"/>
+    <md:NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</md:NameIDFormat>
+    <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
+                            Location="https://idin.surfconext.nl/saml2/idp/SSOService.php"/>
+  </md:IDPSSODescriptor>
+</md:EntityDescriptor>

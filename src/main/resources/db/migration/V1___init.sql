@@ -3,11 +3,15 @@
 --
 CREATE TABLE users (
   id             MEDIUMINT    NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  unspecified_id VARCHAR(255) NOT NULL,
-  name           VARCHAR(255) NOT NULL,
-  email          VARCHAR(255) NOT NULL,
+  unspecified_id VARCHAR(255),
+  username       VARCHAR(255) NOT NULL,
+  email          VARCHAR(255),
   central_idp    VARCHAR(255) NOT NULL,
-  affiliations   VARCHAR(255)
+  mapped         TINYINT(1)            DEFAULT 0,
+  affiliations   VARCHAR(255),
+  invite_hash    VARCHAR(255),
+  institution    VARCHAR(255),
+  created        TIMESTAMP             DEFAULT CURRENT_TIMESTAMP
 )
   ENGINE = InnoDB
   DEFAULT CHARSET = latin1

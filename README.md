@@ -76,8 +76,8 @@ am.public.certificate=${output from cleaning the crt file}
 Add the EB and central IdP certificates to the application.properties file:
 
 ```bash
-eb.public.certificate=${copy & paste from the metadata}
-eb.public.certificate=${copy & paste from the metadata}
+surfconext_idp.public.certificate=${copy & paste from the metadata}
+surfconext_idp.public.certificate=${copy & paste from the metadata}
 ```
 
 ## [Attribute Authority](#attribute-authority)
