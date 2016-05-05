@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.Date;
 
 @Entity(name = "users")
-public class User implements UserDetails, CredentialsContainer {
+public class User implements UserDetails {
 
   @Id
   @GeneratedValue
@@ -142,10 +142,6 @@ public class User implements UserDetails, CredentialsContainer {
 
   public void setInviteHash(String inviteHash) {
     this.inviteHash = inviteHash;
-  }
-
-  @Override
-  public void eraseCredentials() {
   }
 
   public Date getCreated() {

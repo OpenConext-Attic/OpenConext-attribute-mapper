@@ -1,1 +1,2 @@
-SELECT 1;
+DELETE FROM attribute_mapper.users;
+

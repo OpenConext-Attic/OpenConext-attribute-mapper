@@ -48,9 +48,8 @@ public class ErrorController implements org.springframework.boot.autoconfigure.w
     RequestAttributes requestAttributes = new ServletRequestAttributes(request);
     Map<String, Object> result = this.errorAttributes.getErrorAttributes(requestAttributes, false);
 
-    if (environment.acceptsProfiles("dev")) {
-      modelMap.put("errorAttributes", result);
-    }
+    modelMap.put("errorAttributes", result);
+
     if (result.getOrDefault("status", 500).equals(404)) {
       return "404";
     }

@@ -1,6 +1,5 @@
 header {
 
-  height: 90px;
   padding: 25px 15px 0px 20px;
   background: white;
   border-bottom: 2px solid $blue;
@@ -9,7 +8,7 @@ header {
     background: url(../images/logo.png) no-repeat left center;
     background-size: 160px 50px;
     height: 50px;
-    float: left;
+    margin-bottom: 10px;
     font-size: 26.5px;
     line-height: 29px;
     -webkit-font-smoothing: antialiased;
@@ -28,6 +27,7 @@ header {
   }
 
   .meta {
+
     float: right;
     .logo {
       width: 26px;
@@ -54,6 +54,7 @@ header {
     .language {
       display: inline-block;
       margin: 0px 50px 0px 0px;
+      padding: 0px;
       line-height: 30px;
       font-size: 14px;
       li {
@@ -86,8 +87,17 @@ header {
         border-bottom-right-radius: $br;
       }
     }
+    @media screen and (max-width: $medium) {
+      float: none;
+    }
+    @media screen and (max-width: $small) {
+      .logo {
+        display: none;
+      }
+    }
 
   }
+
 }
 
 

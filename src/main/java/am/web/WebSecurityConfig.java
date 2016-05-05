@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -20,6 +21,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.saml.*;
 import org.springframework.security.saml.context.SAMLContextProviderImpl;
 import org.springframework.security.saml.key.JKSKeyManager;
@@ -42,6 +44,7 @@ import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuc
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import javax.servlet.Filter;
 import java.io.IOException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
@@ -191,7 +194,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     return samlEntryPoint;
   }
 
-  // Setup advanced info about metadata
   @Bean
   public ExtendedMetadata extendedMetadata() {
     ExtendedMetadata extendedMetadata = new ExtendedMetadata();
@@ -203,8 +205,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   private MetadataProvider metadataProvider(String resource) throws MetadataProviderException {
     ResourceMetadataProvider resourceMetadataProvider = new ResourceMetadataProvider(new DefaultResourceLoader().getResource(resource));
     resourceMetadataProvider.setParserPool(parserPool());
-    ExtendedMetadataDelegate extendedMetadataDelegate =
-      new ExtendedMetadataDelegate(resourceMetadataProvider, extendedMetadata());
+    ExtendedMetadataDelegate extendedMetadataDelegate = new ExtendedMetadataDelegate(resourceMetadataProvider, extendedMetadata());
     extendedMetadataDelegate.setMetadataTrustCheck(true);
     extendedMetadataDelegate.setMetadataRequireSignature(false);
     return extendedMetadataDelegate;
@@ -253,16 +254,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Bean
   public SavedRequestAwareAuthenticationSuccessHandler successRedirectHandler() {
-    SavedRequestAwareAuthenticationSuccessHandler successRedirectHandler =
-      new SavedRequestAwareAuthenticationSuccessHandler();
+    SavedRequestAwareAuthenticationSuccessHandler successRedirectHandler = new SavedRequestAwareAuthenticationSuccessHandler();
     successRedirectHandler.setDefaultTargetUrl("/mappings");
     return successRedirectHandler;
   }
 
   @Bean
   public SimpleUrlAuthenticationFailureHandler authenticationFailureHandler() {
-    SimpleUrlAuthenticationFailureHandler failureHandler =
-      new SimpleUrlAuthenticationFailureHandler();
+    SimpleUrlAuthenticationFailureHandler failureHandler = new SimpleUrlAuthenticationFailureHandler();
     failureHandler.setUseForward(true);
     failureHandler.setDefaultFailureUrl("/error");
     return failureHandler;
@@ -291,8 +290,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Bean
   public SecurityContextLogoutHandler logoutHandler() {
-    SecurityContextLogoutHandler logoutHandler =
-      new SecurityContextLogoutHandler();
+    SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
     logoutHandler.setInvalidateHttpSession(true);
     logoutHandler.setClearAuthentication(true);
     return logoutHandler;
@@ -300,20 +298,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Bean
   public SAMLLogoutProcessingFilter samlLogoutProcessingFilter() {
-    return new SAMLLogoutProcessingFilter(successLogoutHandler(),
-      logoutHandler());
+    return new SAMLLogoutProcessingFilter(successLogoutHandler(), logoutHandler());
   }
 
   @Bean
   public SAMLLogoutFilter samlLogoutFilter() {
-    return new SAMLLogoutFilter(successLogoutHandler(),
-      new LogoutHandler[]{logoutHandler()},
-      new LogoutHandler[]{logoutHandler()});
+    return new SAMLLogoutFilter(successLogoutHandler(), new LogoutHandler[]{logoutHandler()}, new LogoutHandler[]{logoutHandler()});
   }
 
   private ArtifactResolutionProfile artifactResolutionProfile() {
-    final ArtifactResolutionProfileImpl artifactResolutionProfile =
-      new ArtifactResolutionProfileImpl(httpClient());
+    final ArtifactResolutionProfileImpl artifactResolutionProfile = new ArtifactResolutionProfileImpl(httpClient());
     artifactResolutionProfile.setProcessor(new SAMLProcessorImpl(soapBinding()));
     return artifactResolutionProfile;
   }
@@ -362,17 +356,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Bean
   public FilterChainProxy samlFilter() throws Exception {
     List<SecurityFilterChain> chains = new ArrayList<>();
-    chains.add(new DefaultSecurityFilterChain(new AntPathRequestMatcher("/saml/login/**"),
-      samlEntryPoint()));
-    chains.add(new DefaultSecurityFilterChain(new AntPathRequestMatcher("/saml/logout/**"),
-      samlLogoutFilter()));
-    chains.add(new DefaultSecurityFilterChain(new AntPathRequestMatcher("/saml/metadata/**"),
-      metadataDisplayFilter()));
-    chains.add(new DefaultSecurityFilterChain(new AntPathRequestMatcher("/saml/SSO/**"),
-      samlWebSSOProcessingFilter()));
-    chains.add(new DefaultSecurityFilterChain(new AntPathRequestMatcher("/saml/SingleLogout/**"),
-      samlLogoutProcessingFilter()));
+    chains.add(chain("/saml/login/**", samlEntryPoint()));
+    chains.add(chain("/saml/logout/**", samlLogoutFilter()));
+    chains.add(chain("/saml/metadata/**", metadataDisplayFilter()));
+    chains.add(chain("/saml/SSO/**", samlWebSSOProcessingFilter()));
+    chains.add(chain("/saml/SingleLogout/**", samlLogoutProcessingFilter()));
     return new FilterChainProxy(chains);
+  }
+
+  private DefaultSecurityFilterChain chain(String pattern, Filter entryPoint) {
+    return new DefaultSecurityFilterChain(new AntPathRequestMatcher(pattern), entryPoint);
   }
 
   @Bean
@@ -384,21 +377,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http
-      .httpBasic()
-      .authenticationEntryPoint(samlEntryPoint());
-    http
-      .csrf()
-      .disable();
-    http
+      .httpBasic().authenticationEntryPoint(samlEntryPoint())
+      .and()
+      .csrf().disable()
       .addFilterBefore(metadataGeneratorFilter(), ChannelProcessingFilter.class)
-      .addFilterAfter(samlFilter(), BasicAuthenticationFilter.class);
-    http
+      .addFilterAfter(samlFilter(), BasicAuthenticationFilter.class)
       .authorizeRequests()
       .antMatchers("/").permitAll()
       .antMatchers("/error").permitAll()
       .antMatchers("/saml/**").permitAll()
-      .anyRequest().hasRole("USER");
-    http
+      .anyRequest().hasRole("USER")
+      .and()
       .logout()
       .logoutSuccessUrl("/");
   }
@@ -406,6 +395,34 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
     auth.authenticationProvider(samlAuthenticationProvider());
+  }
+
+  @Order(1)
+  @Configuration
+  public static class ApiSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
+
+    @Value("${am.api.name}")
+    private String name;
+
+    @Value("${am.api.password}")
+    private String password;
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+      http
+        .antMatcher("/api/**")
+        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        .and()
+        .csrf().disable()
+        .addFilterBefore(new BasicAuthenticationFilter(authenticationManager()), BasicAuthenticationFilter.class)
+        .authorizeRequests()
+        .antMatchers("/api/**").hasRole("API");
+    }
+
+    @Autowired
+    protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+      auth.inMemoryAuthentication().withUser(name).password(password).roles("API");
+    }
   }
 
 }

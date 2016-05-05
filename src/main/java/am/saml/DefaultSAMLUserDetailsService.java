@@ -2,6 +2,11 @@ package am.saml;
 
 import am.model.User;
 import am.repository.UserRepository;
+import org.opensaml.saml2.core.Attribute;
+import org.opensaml.saml2.core.NameID;
+import org.opensaml.xml.XMLObject;
+import org.opensaml.xml.schema.XSAny;
+import org.opensaml.xml.schema.XSString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +16,21 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.saml.SAMLCredential;
 import org.springframework.security.saml.userdetails.SAMLUserDetailsService;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
+import java.util.List;
+import java.util.Optional;
+
+import static java.util.stream.Collectors.toList;
 import static org.springframework.security.core.authority.AuthorityUtils.createAuthorityList;
 
 /**
  * The user can log in with the central IdP and we lookup the user or provision her for the first time based on the
- * unspecified urn which we create from the central IdP schacHome and name.
+ * unspecified urn which we create from the central IdP schacHome and nameID.
  * <p>
- * If the user has logged in using SURFConext then we assume an authenticated user in the SecurityContextHolder
+ * If the user has logged in using SURFConext then we assume an authenticated user in the SecurityContextHolder as
+ * this is the second step.
  */
 @Service
 public class DefaultSAMLUserDetailsService implements SAMLUserDetailsService {
@@ -72,9 +84,29 @@ public class DefaultSAMLUserDetailsService implements SAMLUserDetailsService {
     User user = new User();
     user.setUsername(username);
     user.setCentralIdp(centralIdpEntityId);
+    Attribute attribute = credential.getAttribute("urn:mace:dir:attribute-def:eduPersonAffiliation");
+    if (attribute != null) {
+      List<String> affiliations = attribute.getAttributeValues().stream().map(this::stringValueFromXMLObject)
+        .filter(Optional::isPresent).map(Optional::get).collect(toList());
+      user.setAffiliations(String.join(", ",affiliations));
+    }
+
     //TODO what do we want to save from the user
     LOG.debug("Provisioning {} after successful login", user);
     return userRepository.save(user);
+  }
+
+  private Optional<String> stringValueFromXMLObject(XMLObject xmlObj) {
+    if (xmlObj instanceof XSString) {
+      return Optional.of(((XSString) xmlObj).getValue());
+    } else if (xmlObj instanceof XSAny) {
+      XSAny xsAny = (XSAny) xmlObj;
+      String textContent = xsAny.getTextContent();
+      if (StringUtils.hasText(textContent)) {
+        return Optional.of(textContent);
+      }
+    }
+    return Optional.empty();
   }
 
   private User mapUser(User user, SAMLCredential credential) {

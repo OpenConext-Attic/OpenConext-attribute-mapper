@@ -403,7 +403,6 @@ a {
     display: inline-block; }
 
 header {
-  height: 90px;
   padding: 25px 15px 0px 20px;
   background: white;
   border-bottom: 2px solid #4db3cf; }
@@ -411,7 +410,7 @@ header {
     background: url(../images/logo.png) no-repeat left center;
     background-size: 160px 50px;
     height: 50px;
-    float: left;
+    margin-bottom: 10px;
     font-size: 26.5px;
     line-height: 29px;
     -webkit-font-smoothing: antialiased;
@@ -446,6 +445,7 @@ header {
     header .meta .language {
       display: inline-block;
       margin: 0px 50px 0px 0px;
+      padding: 0px;
       line-height: 30px;
       font-size: 14px; }
       header .meta .language li {
@@ -471,6 +471,12 @@ header {
       header .meta .language li:nth-child(2) a {
         border-top-right-radius: 5px;
         border-bottom-right-radius: 5px; }
+    @media screen and (max-width: 1000px) {
+      header .meta {
+        float: none; } }
+    @media screen and (max-width: 600px) {
+      header .meta .logo {
+        display: none; } }
 
 .button, .button_white, .button_white_disabled, .button_full_disabled, .button_full, .button_submit, .button_submit_large, .button_submit_small, .button_disabled, .button_submit_disabled, .button_submit_small_disabled, .button_narrow, .button_cancel, .button_cancel_large {
   background: #4db3cf;
