@@ -34,6 +34,11 @@ public class DefaultSAMLEntryPoint extends SAMLEntryPoint {
     } else {
       request.setAttribute(PEER_ENTITY_ID, centralIdpEntityId);
     }
+    doCommence(request, response, e);
+  }
+
+  // For testing purposes
+  protected void doCommence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
     super.commence(request, response, e);
   }
 }

@@ -49,9 +49,10 @@ public class DefaultSAMLUserDetailsServiceTest {
   }
 
   @Test
-  public void testLoadUserBySAML() throws Exception {
+  public void testLoadExistingNonMappedUserBySAML() throws Exception {
     User user = new User();
     when(userRepository.findByUnspecifiedId(String.format(urnFormat, centralIdpSchacHome, nameID))).thenReturn(Optional.of(user));
+
     User elevatedUser = (User) subject.loadUserBySAML(samlCredential(centralIdpEntityId));
     assertFalse(elevatedUser.isMapped());
   }
@@ -69,8 +70,8 @@ public class DefaultSAMLUserDetailsServiceTest {
     xsString.setValue("teacher");
 
     attribute.getAttributeValues().add(xsString);
-
     List<Attribute> attributes = Collections.singletonList(attribute);
+
     return new SAMLCredential(nameId, assertion, entityID, attributes, "N/A");
 
   }
