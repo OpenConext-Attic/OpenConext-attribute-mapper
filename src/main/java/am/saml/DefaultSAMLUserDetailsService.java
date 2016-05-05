@@ -36,10 +36,9 @@ import static org.springframework.security.core.authority.AuthorityUtils.createA
 public class DefaultSAMLUserDetailsService implements SAMLUserDetailsService {
 
   private static final Logger LOG = LoggerFactory.getLogger(DefaultSAMLUserDetailsService.class);
+  public static final String urnFormat = "urn:collab:person:%s:%s";
 
   private final UserRepository userRepository;
-
-  private final String urnFormat = "urn:collab:person:%s:%s";
 
   @Value("${surfconext_idp.entity_id}")
   private String surfConextIdpEntityId;
@@ -69,9 +68,9 @@ public class DefaultSAMLUserDetailsService implements SAMLUserDetailsService {
     User user;
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     if (centralIdpEntityId.equals(remoteEntityID)) {
-      user = userRepository.findByUsername(username).orElseGet(() -> parseUser(username, credential));
+      user = userRepository.findByUnspecifiedId(username).orElseGet(() -> parseUser(username, credential));
     } else if (surfConextIdpEntityId.equals(remoteEntityID)) {
-      user = userRepository.findByUsername(username).orElseThrow(() -> new IllegalArgumentException(String.format("User %s not found prior to %s login", username, surfConextIdpEntityId)));
+      user = userRepository.findByUnspecifiedId(username).orElseThrow(() -> new IllegalArgumentException(String.format("User %s not found prior to %s login", username, surfConextIdpEntityId)));
 
     } else {
       throw new IllegalArgumentException(String.format("Unknown remoteEntityID {}", remoteEntityID));

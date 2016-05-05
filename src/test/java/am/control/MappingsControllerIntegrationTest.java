@@ -1,10 +1,14 @@
 package am.control;
 
 import am.AbstractIntegrationTest;
+import am.model.User;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.TestingAuthenticationToken;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Base64;
 import java.util.regex.Matcher;
@@ -28,7 +32,7 @@ public class MappingsControllerIntegrationTest extends AbstractIntegrationTest {
   private String amEntityId;
 
   @Test
-  public void testSamlInterceptor() throws Exception {
+  public void testSamlInterceptorWithCentralIdp() throws Exception {
     ResponseEntity<String> response = restTemplate.getForEntity("http://localhost:" + port + "/mappings", String.class);
 
     Matcher matcher = Pattern.compile("name=\"SAMLRequest\" value=\"(.*?)\"").matcher(response.getBody());
@@ -38,4 +42,5 @@ public class MappingsControllerIntegrationTest extends AbstractIntegrationTest {
 
     assertTrue(saml.contains("<saml2:Issuer xmlns:saml2=\"urn:oasis:names:tc:SAML:2.0:assertion\">" + amEntityId + "</saml2:Issuer>"));
   }
+
 }
