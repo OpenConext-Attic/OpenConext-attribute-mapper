@@ -14,10 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import static org.springframework.test.context.jdbc.SqlConfig.ErrorMode.FAIL_ON_ERROR;
 import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.ISOLATED;
 
-/**
- * Override the @WebIntegrationTest annotation if you don't want to have mock shibboleth headers (e.g. you want to
- * impersonate EB or other identity).
- */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebIntegrationTest(randomPort = true, value = {"spring.profiles.active=dev"})

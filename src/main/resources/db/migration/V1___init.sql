@@ -8,7 +8,9 @@ CREATE TABLE users (
   email          VARCHAR(255),
   central_idp    VARCHAR(255) NOT NULL,
   mapped         TINYINT(1)            DEFAULT 0,
+  confirmed      TINYINT(1)            DEFAULT 0,
   affiliations   VARCHAR(255),
+  granted_authorities    VARCHAR(255),
   invite_hash    VARCHAR(255),
   institution    VARCHAR(255),
   created        TIMESTAMP             DEFAULT CURRENT_TIMESTAMP

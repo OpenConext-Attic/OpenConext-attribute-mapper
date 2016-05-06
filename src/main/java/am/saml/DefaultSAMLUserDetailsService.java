@@ -3,7 +3,6 @@ package am.saml;
 import am.model.User;
 import am.repository.UserRepository;
 import org.opensaml.saml2.core.Attribute;
-import org.opensaml.saml2.core.NameID;
 import org.opensaml.xml.XMLObject;
 import org.opensaml.xml.schema.XSAny;
 import org.opensaml.xml.schema.XSString;
@@ -12,16 +11,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.saml.SAMLCredential;
 import org.springframework.security.saml.userdetails.SAMLUserDetailsService;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Optional;
 
+import static java.lang.String.format;
 import static java.util.stream.Collectors.toList;
 import static org.springframework.security.core.authority.AuthorityUtils.createAuthorityList;
 
@@ -54,66 +54,64 @@ public class DefaultSAMLUserDetailsService implements SAMLUserDetailsService {
     this.userRepository = userRepository;
   }
 
-  public Object loadUserBySAML(SAMLCredential credential) {
+  @Override
+  public User loadUserBySAML(SAMLCredential credential) {
+    String localUsername = credential.getNameID().getValue();
+    String urn = format(urnFormat, centralIdpSchacHome, localUsername);
+
     String remoteEntityID = credential.getRemoteEntityID();
 
-    if (isCentralIdpAuthnResponse(remoteEntityID)) {
-      //TODO check against the real iDEN IdP
-      String localUsername = credential.getNameID().getValue();
-      String username = String.format(urnFormat, centralIdpSchacHome, localUsername);
-    }
-    //urn:collab:person:example.com:admin
-    String localUsername = credential.getNameID().getValue();
-    String username = String.format(urnFormat, centralIdpSchacHome, localUsername);
-    User user;
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    if (centralIdpEntityId.equals(remoteEntityID)) {
-      user = userRepository.findByUnspecifiedId(username).orElseGet(() -> parseUser(username, credential));
-    } else if (surfConextIdpEntityId.equals(remoteEntityID)) {
-      user = userRepository.findByUnspecifiedId(username).orElseThrow(() -> new IllegalArgumentException(String.format("User %s not found prior to %s login", username, surfConextIdpEntityId)));
+    return isCentralIdpAuthnResponse(remoteEntityID) ? fromCentralIdp(urn, credential) :
 
-    } else {
-      throw new IllegalArgumentException(String.format("Unknown remoteEntityID {}", remoteEntityID));
-    }
-    user.setAuthorities(user.isMapped() ? createAuthorityList("ROLE_USER", "ROLE_MAPPED") : createAuthorityList("ROLE_USER"));
+      (isSurfConextIdpAuthnResponse(remoteEntityID) ? fromSurfConextIdp(urn, credential) :
+
+        unrecognisedAuthnStatement(remoteEntityID, credential));
+  }
+
+  private User fromCentralIdp(String urn, SAMLCredential credential) {
+    User user = userRepository.findByUnspecifiedId(urn).orElseGet(
+      () -> parseUserFromCentralIdpResponse(urn, credential));
     return user;
   }
 
-  private User parseUser(String username, SAMLCredential credential) {
+  private User fromSurfConextIdp(String username, SAMLCredential credential) {
+    User user = userRepository.findByUnspecifiedId(username).orElseThrow(
+      () -> new IllegalArgumentException(format("User %s not found prior to %s login", username, centralIdpEntityId)));
+
+    String[] affiliations = credential.getAttributeAsStringArray("urn:mace:dir:attribute-def:eduPersonAffiliation");
+    user.setAffiliations(affiliations != null ? String.join(", ", affiliations) : null);
+
+    user.setMapped(true);
+    user.addAuthority(new SimpleGrantedAuthority("ROLE_MAPPED"));
+    user.setInstitution(credential.getAttributeAsString("urn:mace:terena.org:attribute-def:schacHomeOrganization"));
+
+    return userRepository.save(user);
+  }
+
+  private User unrecognisedAuthnStatement(String remoteEntityID, SAMLCredential credential) {
+    throw new IllegalArgumentException(format("Unrecognised Authn Response {} {}", remoteEntityID, credential));
+  }
+
+  private User parseUserFromCentralIdpResponse(String urn, SAMLCredential credential) {
     User user = new User();
-    user.setUsername(username);
+    user.setUnspecifiedId(urn);
     user.setCentralIdp(centralIdpEntityId);
-    Attribute attribute = credential.getAttribute("urn:mace:dir:attribute-def:eduPersonAffiliation");
-    if (attribute != null) {
-      List<String> affiliations = attribute.getAttributeValues().stream().map(this::stringValueFromXMLObject)
-        .filter(Optional::isPresent).map(Optional::get).collect(toList());
-      user.setAffiliations(String.join(", ",affiliations));
-    }
 
-    //TODO what do we want to save from the user
+    String sn = credential.getAttributeAsString("urn:mace:dir:attribute-def:sn");
+    String preferredLastName = credential.getAttributeAsString("urn:nl:bvn:bankid:1.0:consumer.preferredlastname");
+    String lastName = sn != null ? sn : nullSafe(preferredLastName);
+    String initials = credential.getAttributeAsString("urn:nl:bvn:bankid:1.0:consumer.initials");
+
+    user.setUsername(nullSafe(initials).concat(lastName));
+    user.addAuthority(new SimpleGrantedAuthority("ROLE_USER"));
+
     LOG.debug("Provisioning {} after successful login", user);
+
     return userRepository.save(user);
   }
 
-  private Optional<String> stringValueFromXMLObject(XMLObject xmlObj) {
-    if (xmlObj instanceof XSString) {
-      return Optional.of(((XSString) xmlObj).getValue());
-    } else if (xmlObj instanceof XSAny) {
-      XSAny xsAny = (XSAny) xmlObj;
-      String textContent = xsAny.getTextContent();
-      if (StringUtils.hasText(textContent)) {
-        return Optional.of(textContent);
-      }
-    }
-    return Optional.empty();
-  }
-
-  private User mapUser(User user, SAMLCredential credential) {
-    String schacHome = credential.getAttributeAsString("urn:mace:terena.org:attribute-def:schacHomeOrganization");
-    user.setInstitution(schacHome);
-    user.setUnspecifiedId("");
-
-    return userRepository.save(user);
+  private String nullSafe(String s) {
+    return s != null ? s : "";
   }
 
   private boolean isCentralIdpAuthnResponse(String remoteEntityID) {

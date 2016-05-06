@@ -44,6 +44,7 @@ public class ApiControllerTest extends AbstractIntegrationTest {
     assertEquals("researcher, student", user.getAffiliations());
     assertEquals("example.com", user.getInstitution());
     assertTrue(user.isMapped());
+    assertFalse(user.isConfirmed());
   }
 
   @Test
