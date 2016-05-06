@@ -1,6 +1,56 @@
 .mappingsBox {
   @extend .box;
 
+  padding: 0px;
+
+  h3 {
+    color: $blue;
+    padding: 35px;
+    margin: 0px;
+    border-bottom: 1px solid $medium-grey;
+  }
+
+  div.notMapped {
+    padding: 50px;
+  }
+
+  div.mappings {
+    display: flex;
+    border-bottom: 1px solid $medium-grey;
+    padding: 35px;
+
+    @media screen and (max-width: $medium) {
+      flex-direction: column;
+    }
+
+    section {
+      padding: 10px;
+      flex: 1;
+      span:first-child {
+        display: block;
+        color: $medium-grey;
+        margin-top: 6px;
+      }
+    }
+
+    section.logo {
+      img {
+        width: 100px;
+      }
+    }
+
+    section.mappingProperties {
+      span {
+        display: block;
+        &:nth-child(3), &:nth-child(5) {
+          color: $medium-grey;
+          margin-top: 10px;
+        }
+      }
+    }
+
+  }
+
   em {
     font-size: larger;
   }
@@ -10,7 +60,4 @@
   }
 }
 
-div.mappings {
-  display: flex;
-  border-bottom: 1px solid $medium-grey;
-}
+

@@ -1,0 +1,74 @@
+.progress {
+  .ind-step-number {
+    width: 22px;
+    height: 22px;
+    background-color: lighten($blue, 10);
+    color: darken(white, 10);
+    position: absolute;
+    border-radius: 50%;
+    text-align: center;
+    left: -12px;
+  }
+
+  section.steps {
+    display: flex;
+    padding: 0px;
+    margin: 0px;
+    span {
+      flex: 1;
+      padding: 15px;
+      color: $medium-grey;
+      position: relative;
+      &.active {
+        color: darken($medium-grey, 5);
+        font-weight: bold;
+        &:before {
+          color: white;
+        }
+      }
+      &:first-child {
+        margin-left: 62px;
+        &:before {
+          @extend .ind-step-number;
+          content: '1';
+        }
+      }
+      &:nth-child(2) {
+        &:before {
+          @extend .ind-step-number;
+          content: '2';
+        }
+      }
+      &:last-child {
+        &:before {
+          @extend .ind-step-number;
+          content: '3';
+        }
+      }
+    }
+  }
+  .progress-ind {
+    margin: 0px 49px;
+    background-color: $light-grey;
+    box-shadow: 1px 1px 1px 0px $medium-grey;
+    position: relative;
+    height: 24px;
+    border-radius: 5px;
+    span {
+      background-color: $blue;
+      position: absolute;
+      height: 24px;
+      border-bottom-left-radius: 5px;
+      border-top-left-radius: 5px;
+      &.step1 {
+        width: 2%;
+      }
+      &.step2 {
+        width: 36%;
+      }
+      &.step3 {
+        width: 66%;
+      }
+    }
+  }
+}

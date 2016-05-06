@@ -12,14 +12,19 @@ public class MappingsControllerTest {
 
   @Test
   public void testIndex() throws Exception {
-    String view = subject.mappings(null, null);
+    String view = subject.index(null, null);
     assertEquals("index", view);
+  }
+
+  @Test
+  public void testMappings() throws Exception {
+    String view = subject.index(new TestingAuthenticationToken("principal", "N/A"), new ModelMap());
+    assertEquals("redirect:/mappings", view);
   }
 
   @Test
   public void testLanding() throws Exception {
     String view = subject.mappings(new TestingAuthenticationToken("principal", "N/A"), new ModelMap());
     assertEquals("mappings", view);
-
   }
 }

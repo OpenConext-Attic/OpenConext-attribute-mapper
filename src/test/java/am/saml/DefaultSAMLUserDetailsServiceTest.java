@@ -89,7 +89,7 @@ public class DefaultSAMLUserDetailsServiceTest {
 
   @Test
   public void testMapUserAfterSurfConextLogin() throws Exception {
-    SecurityContextHolder.getContext().setAuthentication(new TestingAuthenticationToken(new User(), "N/A", "ROLE_USER"));
+    SecurityContextHolder.getContext().setAuthentication(new TestingAuthenticationToken(user(), "N/A", "ROLE_USER"));
     when(userRepository.findByUnspecifiedId(unSpecifiedId))
       .thenReturn(Optional.of(user()));
     when(userRepository.save(any(User.class))).thenAnswer(returnsFirstArg());
@@ -104,7 +104,7 @@ public class DefaultSAMLUserDetailsServiceTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testUnknownUserAfterSurfConextLogin() {
-    SecurityContextHolder.getContext().setAuthentication(new TestingAuthenticationToken(new User(), "N/A", "ROLE_USER"));
+    SecurityContextHolder.getContext().setAuthentication(new TestingAuthenticationToken(user(), "N/A", "ROLE_USER"));
     when(userRepository.findByUnspecifiedId(unSpecifiedId))
       .thenReturn(Optional.empty());
 
@@ -141,6 +141,7 @@ public class DefaultSAMLUserDetailsServiceTest {
   private User user() {
     User user = new User();
     user.setUsername(nameID);
+    user.setUnspecifiedId(unSpecifiedId);
     return user;
   }
 

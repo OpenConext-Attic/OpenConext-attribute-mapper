@@ -1,0 +1,10 @@
+<div th:fragment="progress" class="progress">
+  <section class="steps">
+    <span th:text="#{am.progress.step1}" th:class="${step == 1} ? 'active' : ''"></span>
+    <span th:text="#{am.progress.step2}" th:class="${step == 2} ? 'active' : ''"></span>
+    <span th:text="#{am.progress.step3}" th:class="${step == 3} ? 'active' : ''"></span>
+  </section>
+  <div class="progress-ind">
+    <span th:class="${'step' + step}"></span>
+  </div>
+</div>  

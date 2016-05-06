@@ -1,0 +1,9 @@
+<div th:fragment="not_mapped" class="notMapped">
+  <div>
+    <span th:text="#{am.no.mappings.pre}"></span>
+    <em th:text=" ${#authentication.principal.username} "></em>
+    <span th:text="#{am.no.mappings.post}"></span>
+  </div>
+  <a class="button_submit_large" th:text="#{am.login}" th:href="@{/saml/login}">Login</a>
+</div>
+

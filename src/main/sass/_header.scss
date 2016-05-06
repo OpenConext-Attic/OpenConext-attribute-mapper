@@ -38,10 +38,10 @@ header {
     }
 
     .name {
-      color: $blue;
       margin-right: 40px;
       float: left;
       line-height: 32px;
+      text-decoration: none;
     }
 
     a.logout {
@@ -51,9 +51,10 @@ header {
       text-decoration: none;
       float: right;
     }
+
     .language {
       display: inline-block;
-      margin: 0px 50px 0px 0px;
+      margin: 0px 0px 0px 0px;
       padding: 0px;
       line-height: 30px;
       font-size: 14px;

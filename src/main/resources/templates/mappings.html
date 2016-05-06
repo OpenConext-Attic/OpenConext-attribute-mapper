@@ -10,19 +10,13 @@
 <div layout:fragment="content">
 
   <section class="mappingsBox">
-    <div sec:authorize="!hasRole('ROLE_MAPPED')">
-      <div>
-        <span th:text="#{am.no.mappings.pre}"></span>
-        <em th:text=" ${#authentication.principal.username} "></em>
-        <span th:text="#{am.no.mappings.post}"></span>
-      </div>
-      <a class="button_submit_large" th:text="#{am.login}" th:href="@{/saml/login}">Login</a>
-    </div>
+    <div sec:authorize="!hasRole('ROLE_CONFIRMED')" th:replace="fragments/_progress :: progress"></div>
+    <div sec:authorize="!hasRole('ROLE_MAPPED')" th:replace="fragments/_not_mapped :: not_mapped"></div>
     <div sec:authorize="hasRole('ROLE_MAPPED')">
-      <div th:text="#{am.mappings}"></div>
+      <h3 th:text="#{am.mappings}"></h3>
       <div class="mappings">
-        <section>
-          <img class="logo" th:src="@{/images/iden.png}"/>
+        <section class="logo">
+          <img th:src="@{/images/iden.png}"/>
         </section>
         <section class="connectionCreated">
           <span th:text="#{am.mappings.connection.made}"></span>
@@ -33,18 +27,19 @@
           <span th:text="${#authentication.principal.username}"></span>
           <span th:text="#{am.mappings.institution}"></span>
           <span th:text="${#authentication.principal.institution}"></span>
+          <span th:text="#{am.mappings.email}"></span>
+          <span th:text="${#authentication.principal.email}"></span>
         </section>
         <section class="status">
           <span th:text="#{am.mappings.status}"></span>
           <span th:text="#{am.mappings.connected}"></span>
         </section>
         <section class="disconnect">
-          <a class="button_cancel_large" th:text="#{am.am.mappings.disconnect}" th:href="@{/disconnect}">Disconnect</a>
+          <a class="button_cancel_large" th:text="#{am.mappings.disconnect}" th:href="@{/disconnect}">Disconnect</a>
         </section>
       </div>
     </div>
   </section>
-
 
 
 </div>

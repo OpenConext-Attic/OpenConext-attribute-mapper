@@ -19,24 +19,6 @@
 
 }
 
-.button_white {
-  @extend .button;
-  color: $blue;
-  background-color: white;
-
-  &:hover {
-    background: darken(white,10)
-  }
-}
-
-.button_white_disabled {
-  @extend .button_white;
-
-  opacity: 0.5;
-  pointer-events: none;
-  cursor: default;
-}
-
 .button_submit {
   @extend .button;
   width: 180px;
@@ -48,52 +30,14 @@
   width: 240px;
 }
 
-.button_submit_small {
-  @extend .button;
-  width: 110px;
-}
-
-.button_disabled {
-  @extend .button;
-
-  opacity: 0.5;
-  pointer-events: none;
-  cursor: default;
-}
-
-.button_submit_disabled {
-  @extend .button_disabled;
-  width: 180px;
-}
-
-.button_submit_small_disabled {
-  @extend .button_disabled;
-  width: 110px;
-}
-
-.button_full {
-  @extend .button_white;
-  margin: auto 0;
-}
-
-.button_full_disabled {
-  @extend .button_white_disabled;
-  margin: auto 0;
-}
-
-.button_narrow {
-  @extend .button;
-  padding: 3px 10px;
-}
-
 .button_cancel {
   @extend .button;
-  background: white;
-  color: $medium-grey;
-  border: 1px solid $medium-grey;
+  background: $medium-grey;
+  color: white;
+  border: 1px solid $light-grey;
   margin-left: 15px;
   &:hover {
-    background: darken(white, 10);
+    background: darken($medium-grey, 10);
     text-decoration: underline;
   }
 

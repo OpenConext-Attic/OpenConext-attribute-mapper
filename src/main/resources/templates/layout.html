@@ -14,7 +14,7 @@
 
   <a href="/" class="title" th:text="#{am.title}">Attribute Mapper</a>
   <div class="meta">
-    <span class="name" sec:authorize="hasRole('ROLE_USER')" th:text="#{am.welcome.user(${#authentication.principal.username})}"></span>
+    <a href="/profile" th:href="@{/profile}" class="name" sec:authorize="hasRole('ROLE_USER')" th:text="#{am.welcome.user(${#authentication.principal.username})}"></a>
     <ul class="language">
       <li><a th:class="__${#locale}__ == 'en' ? 'active' : ''" href="/?lang=en">EN</a></li>
       <li><a th:class="__${#locale}__ == 'nl' ? 'active' : ''" href="/?lang=nl">NL</a></li>

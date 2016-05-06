@@ -63,7 +63,7 @@ public class DefaultSAMLUserDetailsService implements SAMLUserDetailsService {
 
     return isCentralIdpAuthnResponse(remoteEntityID) ? fromCentralIdp(urn, credential) :
 
-      (isSurfConextIdpAuthnResponse(remoteEntityID) ? fromSurfConextIdp(urn, credential) :
+      (isSurfConextIdpAuthnResponse(remoteEntityID) ? fromSurfConextIdp(credential) :
 
         unrecognisedAuthnStatement(remoteEntityID, credential));
   }
@@ -74,9 +74,10 @@ public class DefaultSAMLUserDetailsService implements SAMLUserDetailsService {
     return user;
   }
 
-  private User fromSurfConextIdp(String username, SAMLCredential credential) {
-    User user = userRepository.findByUnspecifiedId(username).orElseThrow(
-      () -> new IllegalArgumentException(format("User %s not found prior to %s login", username, centralIdpEntityId)));
+  private User fromSurfConextIdp(SAMLCredential credential) {
+    String urn = ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUnspecifiedId();
+    User user = userRepository.findByUnspecifiedId(urn).orElseThrow(
+      () -> new IllegalArgumentException(format("User %s not found prior to %s login", urn, centralIdpEntityId)));
 
     String[] affiliations = credential.getAttributeAsStringArray("urn:mace:dir:attribute-def:eduPersonAffiliation");
     user.setAffiliations(affiliations != null ? String.join(", ", affiliations) : null);
