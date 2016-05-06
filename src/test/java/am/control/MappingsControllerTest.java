@@ -1,5 +1,6 @@
 package am.control;
 
+import am.model.User;
 import org.junit.Test;
 import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.ui.ModelMap;
@@ -18,13 +19,13 @@ public class MappingsControllerTest {
 
   @Test
   public void testMappings() throws Exception {
-    String view = subject.index(new TestingAuthenticationToken("principal", "N/A"), new ModelMap());
+    String view = subject.index(new TestingAuthenticationToken(new User(), "N/A"), new ModelMap());
     assertEquals("redirect:/mappings", view);
   }
 
   @Test
   public void testLanding() throws Exception {
-    String view = subject.mappings(new TestingAuthenticationToken("principal", "N/A"), new ModelMap());
+    String view = subject.mappings(new TestingAuthenticationToken(new User(), "N/A"), new ModelMap());
     assertEquals("mappings", view);
   }
 }
