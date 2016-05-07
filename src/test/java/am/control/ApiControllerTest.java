@@ -2,7 +2,7 @@ package am.control;
 
 import am.AbstractIntegrationTest;
 import am.PrePopulatedJsonHttpHeaders;
-import am.model.User;
+import am.domain.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Value;
@@ -44,7 +44,7 @@ public class ApiControllerTest extends AbstractIntegrationTest {
     assertEquals("researcher, student", user.getAffiliations());
     assertEquals("example.com", user.getInstitution());
     assertTrue(user.isMapped());
-    assertFalse(user.isConfirmed());
+    assertTrue(user.isConfirmed());
   }
 
   @Test

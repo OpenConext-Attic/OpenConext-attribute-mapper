@@ -1,6 +1,6 @@
 package am.saml;
 
-import am.model.User;
+import am.domain.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;

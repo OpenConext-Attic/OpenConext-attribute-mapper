@@ -35,6 +35,14 @@ mvn spring-boot:run -Drun.jvmArguments="-Dspring.profiles.active=dev"
 
 When developing, it's convenient to just execute the applications main-method, which is in [Application](src/main/java/am/Application.java).
 
+With the `dev` modus you don't have to login and you can mimic the different steps:
+
+```bash
+http://localhost:8080/mappings?step=2
+```
+
+Without the `dev` modus you will need to login and an attempt is made to actually send emails for conformation.
+
 ## [Private signing keys and public certificates](#signing-keys)
 
 The SAML Spring Security library needs a private DSA key and the public certificates of the IdentityProviders. The public certificates can be copied
@@ -84,18 +92,19 @@ surfconext_idp.public.certificate=${copy & paste from the metadata}
 
 TODO
 
-## [SAML metadata](#saml-metadata)
-
-The metadata is generated on the fly and is displayed on http://localhost:8080/saml/metadata
-
-## [Functional testing](#functional-testing)
-
 ```bash
 curl -v -H "Accept: application/json" -H "Content-type: application/json" -d '{"value": ["teacher","professor"]}' -X PUT https://mujina-idp.test.surfconext.nl/api/attributes/urn:mace:dir:attribute-def:eduPersonScopedAffiliation
 ```
 
 To reset Mujina back to its default behaviour, issue:
- 
+
 ```bash
 curl -v -H "Accept: application/json" -H "Content-type: application/json" -X POST https://mujina-idp.test.surfconext.nl/api/reset
 ```
+
+## [SAML metadata](#saml-metadata)
+
+The metadata is generated on the fly and is displayed on http://localhost:8080/saml/metadata
+
+
+

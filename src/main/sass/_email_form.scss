@@ -1,0 +1,21 @@
+.email-form {
+  padding: 50px;
+  span {
+    display: block;
+  }
+  input[type=email] {
+    display: block;
+    width: 50%;
+    margin-top: 15px;
+    border-radius: 3px;
+    border: solid 1px $medium-grey;
+    padding: 3px;
+    &:-webkit-autofill, &:focus{
+      background-color: white;
+    }
+    @media screen and (max-width: $medium) {
+      width: 90%;
+    }
+
+  }
+}

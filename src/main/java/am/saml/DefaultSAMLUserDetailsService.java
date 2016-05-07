@@ -1,11 +1,7 @@
 package am.saml;
 
-import am.model.User;
+import am.domain.User;
 import am.repository.UserRepository;
-import org.opensaml.saml2.core.Attribute;
-import org.opensaml.xml.XMLObject;
-import org.opensaml.xml.schema.XSAny;
-import org.opensaml.xml.schema.XSString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +12,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.saml.SAMLCredential;
 import org.springframework.security.saml.userdetails.SAMLUserDetailsService;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-
-import java.util.List;
-import java.util.Optional;
 
 import static java.lang.String.format;
-import static java.util.stream.Collectors.toList;
-import static org.springframework.security.core.authority.AuthorityUtils.createAuthorityList;
 
 /**
  * The user can log in with the central IdP and we lookup the user or provision her for the first time based on the

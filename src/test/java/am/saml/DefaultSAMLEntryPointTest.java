@@ -1,6 +1,6 @@
 package am.saml;
 
-import am.model.User;
+import am.domain.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;

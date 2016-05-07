@@ -1,14 +1,10 @@
 package am.control;
 
 import am.AbstractIntegrationTest;
-import am.model.User;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.TestingAuthenticationToken;
-import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Base64;
 import java.util.regex.Matcher;

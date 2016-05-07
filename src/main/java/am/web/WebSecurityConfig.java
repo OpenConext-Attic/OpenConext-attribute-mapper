@@ -1,6 +1,7 @@
 package am.web;
 
 import am.saml.*;
+import am.web.mock.MockAuthenticationFilter;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.velocity.app.VelocityEngine;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -63,6 +65,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Autowired
   private DefaultSAMLUserDetailsService samlUserDetailsService;
+
+  @Autowired
+  private Environment environment;
 
   @Value("${surfconext_idp.metadata_url}")
   private String surfConextMetadataUrl;
@@ -383,13 +388,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
       .addFilterBefore(metadataGeneratorFilter(), ChannelProcessingFilter.class)
       .addFilterAfter(samlFilter(), BasicAuthenticationFilter.class)
       .authorizeRequests()
-      .antMatchers("/").permitAll()
-      .antMatchers("/error").permitAll()
-      .antMatchers("/saml/**").permitAll()
+      .antMatchers("/", "/confirmation", "/error", "/404", "/saml/**").permitAll()
       .anyRequest().hasRole("USER")
       .and()
       .logout()
       .logoutSuccessUrl("/");
+
+    if (environment.acceptsProfiles("dev")) {
+      http.addFilterBefore(new MockAuthenticationFilter(), BasicAuthenticationFilter.class);
+    }
   }
 
   @Override

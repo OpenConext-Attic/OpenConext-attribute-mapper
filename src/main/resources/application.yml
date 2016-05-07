@@ -57,6 +57,15 @@ spring:
   mvc:
     favicon:
       enabled: false
+  mail:
+    host: localhost
+    port: 3025
+
+email:
+  # The base url of the application e.g. https://attribute-mapper.test.surfconext.nl
+  base_url: http://localhost:8080
+  # The from email address for confirmation mails
+  from: info@surfconext.nl
 
 # You can skip all the key-value pairs below in the overriding application.properties on the classpath
 

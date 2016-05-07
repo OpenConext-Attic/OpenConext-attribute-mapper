@@ -1,6 +1,6 @@
 package am.saml;
 
-import am.model.User;
+import am.domain.User;
 import am.repository.UserRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,8 +13,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.saml.SAMLCredential;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 

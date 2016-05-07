@@ -1,0 +1,12 @@
+<div th:fragment="email_form" class="email-form">
+  <form id="form" action="/email" method="post">
+    <span th:text="#{am.form.email.info}"></span>
+    <input type="email" required="true" name="email" th:placeholder="#{am.form.email.placeholder}"/>
+    <input type="submit" class="button_submit_large"  th:value="#{am.form.email.submit}"/>
+
+  </form>
+</div>
+
+<div th:fragment="email_confirmation" class="email-confirmation">
+    <span th:text="#{am.form.email.waiting(${user.email})}"></span>
+</div>

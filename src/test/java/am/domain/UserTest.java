@@ -1,11 +1,10 @@
-package am.model;
+package am.domain;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 import static java.util.Arrays.asList;

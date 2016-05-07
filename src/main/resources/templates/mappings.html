@@ -10,35 +10,11 @@
 <div layout:fragment="content">
 
   <section class="mappingsBox">
-    <div sec:authorize="!hasRole('ROLE_CONFIRMED')" th:replace="fragments/_progress :: progress"></div>
-    <div sec:authorize="!hasRole('ROLE_MAPPED')" th:replace="fragments/_not_mapped :: not_mapped"></div>
-    <div sec:authorize="hasRole('ROLE_MAPPED')">
-      <h3 th:text="#{am.mappings}"></h3>
-      <div class="mappings">
-        <section class="logo">
-          <img th:src="@{/images/iden.png}"/>
-        </section>
-        <section class="connectionCreated">
-          <span th:text="#{am.mappings.connection.made}"></span>
-          <span th:text="${#authentication.principal.created}"></span>
-        </section>
-        <section class="mappingProperties">
-          <span th:text="#{am.mappings.name}"></span>
-          <span th:text="${#authentication.principal.username}"></span>
-          <span th:text="#{am.mappings.institution}"></span>
-          <span th:text="${#authentication.principal.institution}"></span>
-          <span th:text="#{am.mappings.email}"></span>
-          <span th:text="${#authentication.principal.email}"></span>
-        </section>
-        <section class="status">
-          <span th:text="#{am.mappings.status}"></span>
-          <span th:text="#{am.mappings.connected}"></span>
-        </section>
-        <section class="disconnect">
-          <a class="button_cancel_large" th:text="#{am.mappings.disconnect}" th:href="@{/disconnect}">Disconnect</a>
-        </section>
-      </div>
-    </div>
+    <div th:replace="fragments/_progress :: progress"></div>
+    <div th:replace="fragments/_not_mapped :: not_mapped"></div>
+    <div th:replace="fragments/_email :: email_form"></div>
+    <div th:replace="fragments/_email :: email_confirmation"></div>
+    <div th:replace="fragments/_mappings :: mappings"></div>
   </section>
 
 

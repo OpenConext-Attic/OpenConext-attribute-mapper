@@ -1,0 +1,27 @@
+<div th:fragment="mappings">
+  <h3 th:text="#{am.mappings}"></h3>
+  <div class="mappings">
+    <section class="logo">
+      <img th:src="@{/images/iden.png}"/>
+    </section>
+    <section class="connectionCreated">
+      <span th:text="#{am.mappings.connection.made}"></span>
+      <span th:text="${#authentication.principal.created}"></span>
+    </section>
+    <section class="mappingProperties">
+      <span th:text="#{am.mappings.name}"></span>
+      <span th:text="${#authentication.principal.username}"></span>
+      <span th:text="#{am.mappings.institution}"></span>
+      <span th:text="${#authentication.principal.institution}"></span>
+      <span th:text="#{am.mappings.email}"></span>
+      <span th:text="${#authentication.principal.email}"></span>
+    </section>
+    <section class="status">
+      <span th:text="#{am.mappings.status}"></span>
+      <span th:text="#{am.mappings.connected}"></span>
+    </section>
+    <section class="disconnect">
+      <a class="button_cancel_large" th:text="#{am.mappings.disconnect}" th:href="@{/disconnect}">Disconnect</a>
+    </section>
+  </div>
+</div>
