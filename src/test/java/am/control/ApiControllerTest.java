@@ -3,8 +3,10 @@ package am.control;
 import am.AbstractIntegrationTest;
 import am.PrePopulatedJsonHttpHeaders;
 import am.domain.User;
+import am.repository.UserRepository;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.TestRestTemplate;
 import org.springframework.http.HttpMethod;
@@ -26,6 +28,9 @@ public class ApiControllerTest extends AbstractIntegrationTest {
 
   private TestRestTemplate secureRestTemplate;
 
+  @Autowired
+  private UserRepository userRepository;
+
   private final PrePopulatedJsonHttpHeaders headers = new PrePopulatedJsonHttpHeaders();
 
   @Before
@@ -35,7 +40,7 @@ public class ApiControllerTest extends AbstractIntegrationTest {
 
   @Test
   public void testUser() throws Exception {
-    ResponseEntity<User> response = getUserResponseEntity("urn:collab:person:idin.nl:5E63A2B5-CB25-42F8-BDE8-F6A5CC25F018", User.class);
+    ResponseEntity<User> response = getUserResponseEntity("urn:collab:person:idin.nl:confirmed", User.class);
     assertEquals(200, response.getStatusCode().value());
 
     User user = response.getBody();
@@ -51,6 +56,15 @@ public class ApiControllerTest extends AbstractIntegrationTest {
   public void testUserNotFound() throws Exception {
     ResponseEntity<Object> response = getUserResponseEntity("urn:collab:person:idin.nl:bogus", Object.class);
 
+    assertEquals(404, response.getStatusCode().value());
+  }
+
+  @Test
+  public void testUserNotConfirmed() throws Exception {
+    String urn = "urn:collab:person:idin.nl:mapped";
+    ResponseEntity<Object> response = getUserResponseEntity(urn, Object.class);
+
+    assertTrue(userRepository.findByUnspecifiedId(urn).isPresent());
     assertEquals(404, response.getStatusCode().value());
   }
 

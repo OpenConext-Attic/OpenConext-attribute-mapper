@@ -1,20 +1,46 @@
 package am.control;
 
 import am.domain.User;
+import am.mail.MailBox;
+import am.repository.UserRepository;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.security.authentication.TestingAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriUtils;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.Collections;
+import java.util.Optional;
 
+import static java.util.Collections.singletonList;
+import static java.util.Collections.singletonMap;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 public class MappingsControllerTest {
 
-  private MappingsController subject = new MappingsController();
+  private MappingsController subject ;
+  private UserRepository userRepository;
+  private MailBox mailBox;
+
+  @Before
+  public void setUp() throws Exception {
+    userRepository = mock(UserRepository.class);
+    mailBox = mock(MailBox.class);
+
+    subject = new MappingsController();
+
+    ReflectionTestUtils.setField(subject, "userRepository", userRepository);
+    ReflectionTestUtils.setField(subject, "mailBox", mailBox);
+  }
 
   @Test
   public void testIndex() throws Exception {
@@ -35,16 +61,40 @@ public class MappingsControllerTest {
   }
 
   @Test
-  public void testInviteHash() throws Exception {
-    String s = "8+10=";
-    System.out.println(URLEncoder.encode(s, "UTF-8"));
-    System.out.println(URLDecoder.decode(s, "UTF-8"));
-    System.out.println(" ");
+  public void testConfirmInvalidHash() throws Exception {
+    when(userRepository.findByInviteHash("hash")).thenReturn(Optional.empty());
 
-    String replaced = s.replaceAll("\\+","%2B");
-    System.out.println(replaced);
-    System.out.println(URLEncoder.encode(replaced, "UTF-8"));
-    System.out.println(URLDecoder.decode(replaced, "UTF-8"));
+    String view = subject.confirm("hash", new ModelMap());
 
+    assertEquals("404", view);
+  }
+
+  @Test
+  public void testConfirmValidHash() throws Exception {
+    when(userRepository.findByInviteHash("hash")).thenReturn(Optional.of(new User()));
+
+    ModelMap modelMap = new ModelMap();
+    String view = subject.confirm("hash", modelMap);
+    User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+    assertEquals("mappings", view);
+    assertTrue(user.isConfirmed());
+    assertEquals(4, modelMap.get("step"));
+  }
+
+  @Test
+  public void testEmail() throws UnsupportedEncodingException {
+    ModelMap modelMap = new ModelMap();
+    User user = new User();
+
+    String view = subject.email(new TestingAuthenticationToken(
+        user,"N/A","ROLE_USER"),
+      new LinkedMultiValueMap(singletonMap("email", singletonList("test@example.org"))),
+      modelMap);
+
+    assertEquals("test@example.org", user.getEmail());
+    assertNotNull(user.getInviteHash());
+    assertEquals("mappings", view);
+    assertEquals(3, modelMap.get("step"));
   }
 }

@@ -26,12 +26,16 @@ public class MockAuthenticationFilter extends GenericFilterBean {
         user.setMapped(true);
         break;
       case "3":
+        user.setInviteHash("hash");
+        user.setEmail("local@test.org");
+        break;
+      case "4":
+        user.setInviteHash(null);
         user.setConfirmed(true);
         break;
       default :
     }
     SecurityContextHolder.getContext().setAuthentication(new TestingAuthenticationToken(user, "N/A", "ROLE_USER"));
     chain.doFilter(request, response);
-
   }
 }

@@ -1,4 +1,4 @@
-<div th:fragment="not_mapped" class="notMapped">
+<div th:fragment="not_mapped" class="notMapped" th:if="${step == 1}">
   <div>
     <span th:text="#{am.no.mappings.pre}"></span>
     <em th:text=" ${#authentication.principal.username} "></em>

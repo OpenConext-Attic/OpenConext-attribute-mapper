@@ -660,6 +660,9 @@ nav {
       .email-form input[type=email] {
         width: 90%; } }
 
+.email-confirmation {
+  padding: 50px; }
+
 .error.notFound {
   text-align: center; }
   .error.notFound p {

@@ -20,3 +20,4 @@ CREATE TABLE users (
   COLLATE = latin1_general_cs;
 
 ALTER TABLE users ADD INDEX users_unspecified_id (unspecified_id);
+ALTER TABLE users ADD INDEX users_invite_hash (invite_hash);

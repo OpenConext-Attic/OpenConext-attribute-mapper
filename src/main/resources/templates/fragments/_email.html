@@ -1,4 +1,4 @@
-<div th:fragment="email_form" class="email-form">
+<div th:if="${step == 2}" th:fragment="email_form" class="email-form">
   <form id="form" action="/email" method="post">
     <span th:text="#{am.form.email.info}"></span>
     <input type="email" required="true" name="email" th:placeholder="#{am.form.email.placeholder}"/>
@@ -7,6 +7,6 @@
   </form>
 </div>
 
-<div th:fragment="email_confirmation" class="email-confirmation">
+<div th:if="${step == 3}" th:fragment="email_confirmation" class="email-confirmation">
     <span th:text="#{am.form.email.waiting(${user.email})}"></span>
 </div>

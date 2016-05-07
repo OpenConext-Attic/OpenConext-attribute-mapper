@@ -1,4 +1,4 @@
-<div th:fragment="progress" class="progress">
+<div th:fragment="progress" class="progress" th:if="${step != 4}">
   <section class="steps">
     <span th:text="#{am.progress.step1}" th:class="${step == 1} ? 'active' : ''"></span>
     <span th:text="#{am.progress.step2}" th:class="${step == 2} ? 'active' : ''"></span>
