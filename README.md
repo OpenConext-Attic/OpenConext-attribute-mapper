@@ -90,16 +90,10 @@ surfconext_idp.public.certificate=${copy & paste from the metadata}
 
 ## [Attribute Authority](#attribute-authority)
 
-TODO
+The Attribute Authority endpoint is protected with Basic Authentication and requires the unspecified nameID
 
 ```bash
-curl -v -H "Accept: application/json" -H "Content-type: application/json" -d '{"value": ["teacher","professor"]}' -X PUT https://mujina-idp.test.surfconext.nl/api/attributes/urn:mace:dir:attribute-def:eduPersonScopedAffiliation
-```
-
-To reset Mujina back to its default behaviour, issue:
-
-```bash
-curl -v -H "Accept: application/json" -H "Content-type: application/json" -X POST https://mujina-idp.test.surfconext.nl/api/reset
+curl -v -H "Accept: application/json" -H "Content-type: application/json" --user am_aa_client:secret http://localhost:8080/api/user/urn:collab:person:idin.nl:confirmed
 ```
 
 ## [SAML metadata](#saml-metadata)

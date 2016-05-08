@@ -10,20 +10,16 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.util.UriUtils;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URI;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.util.Collections;
 import java.util.Optional;
 
 import static java.util.Collections.singletonList;
 import static java.util.Collections.singletonMap;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 public class MappingsControllerTest {
 
@@ -38,8 +34,8 @@ public class MappingsControllerTest {
 
     subject = new MappingsController();
 
-    ReflectionTestUtils.setField(subject, "userRepository", userRepository);
-    ReflectionTestUtils.setField(subject, "mailBox", mailBox);
+    setField(subject, "userRepository", userRepository);
+    setField(subject, "mailBox", mailBox);
   }
 
   @Test
