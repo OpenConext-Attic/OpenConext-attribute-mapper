@@ -43,6 +43,10 @@ http://localhost:8080/mappings?step=2
 
 Without the `dev` modus you will need to login and an attempt is made to actually send emails for conformation.
 
+## [Flow](#flow)
+
+The production flow and the Attribute-Mapper role is depicted in this [this image](src/main/resources/static/images/attribute-mapper.001.png).
+
 ## [Private signing keys and public certificates](#signing-keys)
 
 The SAML Spring Security library needs a private DSA key and the public certificates of the IdentityProviders. The public certificates can be copied
