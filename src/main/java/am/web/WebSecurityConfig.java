@@ -392,7 +392,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
       .addFilterBefore(metadataGeneratorFilter(), ChannelProcessingFilter.class)
       .addFilterAfter(samlFilter(), BasicAuthenticationFilter.class)
       .authorizeRequests()
-      .antMatchers("/", "/confirmation", "/error", "/404", "/saml/**").permitAll()
+      .antMatchers("/", "health", "info", "/confirmation", "/error", "/404", "/saml/**").permitAll()
       .anyRequest().hasRole("USER")
       .and()
       .logout()
