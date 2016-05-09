@@ -81,10 +81,16 @@ endpoints:
   jmx:
     enabled: false
   health:
+    sensitive: false
     enabled: true
   info:
     enabled: true
 
+management:
+  health:
+    mail:
+      enabled: false
+      
 # used by the git plugin
 info:
   build:

@@ -21,6 +21,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -384,6 +385,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   }
 
   @Override
+  public void configure(WebSecurity web) throws Exception {
+    web.ignoring().antMatchers("/health");
+  }
+
+  @Override
   protected void configure(HttpSecurity http) throws Exception {
     http
       .httpBasic().authenticationEntryPoint(samlEntryPoint())
@@ -392,7 +398,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
       .addFilterBefore(metadataGeneratorFilter(), ChannelProcessingFilter.class)
       .addFilterAfter(samlFilter(), BasicAuthenticationFilter.class)
       .authorizeRequests()
-      .antMatchers("/", "health", "info", "/confirmation", "/error", "/404", "/saml/**").permitAll()
+      .antMatchers("/", "/health", "/info", "/confirmation", "/error", "/404", "/saml/**").permitAll()
       .anyRequest().hasRole("USER")
       .and()
       .logout()
