@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      layout:decorator="layout">
+<head>
+  <title th:text="#{am.title}"></title>
+</head>
+<body>
+<div layout:fragment="content">
+
+  <div class="disconnect">
+    <h3 th:text="#{am.disconnect}"></h3>
+    <p th:text="#{am.disconnect.confirmation}"></p>
+    <a class="button_submit" th:text="#{am.disconnect.submit}" th:href="@{/disconnect/do}">Register</a>
+  </div>
+</div>
+
+
+</body>
+</html>

@@ -23,7 +23,9 @@ import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 public class MappingsControllerTest {
 
-  private MappingsController subject ;
+  private static final String email = "test@example.org";
+
+  private MappingsController subject;
   private UserRepository userRepository;
   private MailBox mailBox;
 
@@ -73,24 +75,40 @@ public class MappingsControllerTest {
     String view = subject.confirm("hash", modelMap);
     User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-    assertEquals("mappings", view);
+    assertEquals("redirect:/mappings", view);
     assertTrue(user.isConfirmed());
     assertEquals(4, modelMap.get("step"));
   }
 
   @Test
   public void testEmail() throws UnsupportedEncodingException {
-    ModelMap modelMap = new ModelMap();
     User user = new User();
+    doEmail(user, "mappings", 3);
+
+    assertNotNull(user.getInviteHash());
+  }
+
+  @Test
+  public void testEmailNotChanged() throws UnsupportedEncodingException {
+    User user = new User();
+    user.setConfirmed(true);
+    user.setEmail(email);
+    doEmail(user, "redirect:/mappings", 4);
+
+    assertNull(user.getInviteHash());
+  }
+
+  private void doEmail(User user, String expectedView, int expectedStep) throws UnsupportedEncodingException {
+    ModelMap modelMap = new ModelMap();
 
     String view = subject.email(new TestingAuthenticationToken(
-        user,"N/A","ROLE_USER"),
-      new LinkedMultiValueMap(singletonMap("email", singletonList("test@example.org"))),
+        user, "N/A", "ROLE_USER"),
+      new LinkedMultiValueMap(singletonMap("email", singletonList(email))),
       modelMap);
 
-    assertEquals("test@example.org", user.getEmail());
-    assertNotNull(user.getInviteHash());
-    assertEquals("mappings", view);
-    assertEquals(3, modelMap.get("step"));
+    assertEquals(email, user.getEmail());
+    assertEquals(expectedView, view);
+    assertEquals(expectedStep, modelMap.get("step"));
   }
+
 }

@@ -16,8 +16,8 @@
   <div class="meta">
     <a href="/profile" th:href="@{/profile}" class="name" sec:authorize="hasRole('ROLE_USER')" th:text="#{am.welcome.user(${#authentication.principal.username})}"></a>
     <ul class="language">
-      <li><a th:class="__${#locale}__ == 'en' ? 'active' : ''" href="/?lang=en">EN</a></li>
-      <li><a th:class="__${#locale}__ == 'nl' ? 'active' : ''" href="/?lang=nl">NL</a></li>
+      <li><a id="language_en" th:class="__${#locale}__ == 'en' ? 'active' : ''" href="/?lang=en">EN</a></li>
+      <li><a id="language_nl" th:class="__${#locale}__ == 'nl' ? 'active' : ''" href="/?lang=nl">NL</a></li>
     </ul>
     <a href='https://github.com/OpenConext/OpenConext-attribute-aggregation' target='_blank'>
       <img class="logo" th:src="@{/images/github.png}"/>

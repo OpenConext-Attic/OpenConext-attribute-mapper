@@ -22,6 +22,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.security.SecureRandom;
 import java.util.Base64;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.Random;
 
@@ -63,16 +64,26 @@ public class MappingsController {
 
     TestingAuthenticationToken authentication = new TestingAuthenticationToken(user, "N/A", "ROLE_USER");
     SecurityContextHolder.getContext().setAuthentication(authentication);
-    return path(authentication, modelMap, false);
+    return path(authentication, modelMap, true);
   }
 
-  @RequestMapping(method = RequestMethod.POST, path = "/email")
+  @RequestMapping(method = RequestMethod.POST, path = {"/email", "/profile/update"})
   public String email(Authentication authentication, @RequestBody MultiValueMap<String,String> formData, ModelMap modelMap) throws UnsupportedEncodingException {
     User user = (User) authentication.getPrincipal();
-    user.setEmail(formData.getFirst("email"));
+
+    String email = formData.getFirst("email");
+    if (email.equals(user.getEmail()) && user.isConfirmed()) {
+      // profile/update
+      return path(authentication, modelMap, true);
+    }
+
+    user.setEmail(email);
     user.setInviteHash(generateInvitationHash());
+    user.setConfirmed(false);
     userRepository.save(user);
+
     mailBox.sendConfirmationMail(user);
+
     return path(authentication, modelMap, false);
   }
 
@@ -80,14 +91,12 @@ public class MappingsController {
     if (authentication == null) {
       return "index";
     }
-    if (redirect) {
-      return "redirect:/mappings";
-    }
     User user = (User) authentication.getPrincipal();
     modelMap.put("step", user.isConfirmed() ? 4 : user.getInviteHash() != null ? 3 : user.isMapped() ? 2 : 1);
     modelMap.put("menu", "mappings");
     modelMap.put("user", user);
-    return "mappings";
+
+    return redirect ? "redirect:/mappings" : "mappings";
   }
 
   protected String generateInvitationHash() throws UnsupportedEncodingException {

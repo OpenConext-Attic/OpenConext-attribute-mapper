@@ -1,7 +1,7 @@
 <div th:if="${step == 2}" th:fragment="email_form" class="email-form">
   <form id="form" action="/email" method="post">
     <span th:text="#{am.form.email.info}"></span>
-    <input type="email" required="true" name="email" th:placeholder="#{am.form.email.placeholder}"/>
+    <input type="email" required="true" name="email" th:value="${user.email}" th:placeholder="#{am.form.email.placeholder}"/>
     <input type="submit" class="button_submit_large"  th:value="#{am.form.email.submit}"/>
 
   </form>

@@ -1,18 +1,18 @@
 .profile {
   @extend .box;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
 
-  div {
-    width: 300px;
-    span:first-child {
-      float: left;
-    }
-    span:last-child {
-      float: right;
-    }
+  padding: 0px;
+
+  h3 {
+    color: $blue;
+    padding: 35px;
+    margin: 0px;
+    border-bottom: 1px solid $medium-grey;
+  }
+
+  form {
+    @extend .email-form;
+    padding: 10px 0px 35px 35px;
   }
 
 }

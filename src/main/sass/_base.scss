@@ -41,8 +41,10 @@ a {
     margin: 0px 0px 15px 0px;
   }
   p {
-    margin-bottom: 25px;
     display: inline-block;
+    &:last-child {
+      margin-bottom: 25px;
+    }
   }
 }
 

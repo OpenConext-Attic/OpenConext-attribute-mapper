@@ -11,28 +11,26 @@
 
   <div class="profile">
     <h3 th:text="#{am.profile}"></h3>
-    <div>
-      <span th:text="#{am.mappings.name}"></span>
-      <span th:text="${user.username}"></span>
-    </div>
-    <div>
-      <span th:text="#{am.mappings.institution}"></span>
-      <span th:text="${user.institution}"></span>
-    </div>
-    <div>
-      <span th:text="#{am.mappings.email}"></span>
-      <span th:text="${user.email}"></span>
-    </div>
-    <div>
-      <span th:text="#{am.mappings.affiliations}"></span>
-      <span th:text="${user.affiliations}"></span>
-    </div>
-    <section sec:authorize="!hasRole('ROLE_MAPPED')">
-      <span th:text="#{am.no.mappings.pre}"></span>
-      <em th:text=" ${user.username} "></em>
-      <span th:text="#{am.no.mappings.post}"></span>
-    </section>
-    <a class="button_submit" th:text="#{am.register}" th:href="@{/saml/login}">Register</a>
+
+    <form class="email-form" action="/profile/update" method="post">
+
+      <label for="username" th:text="#{am.mappings.name}"></label>
+      <input id="username" type="text" disabled="true" th:value="${user.username}"/>
+
+      <label for="email" th:text="#{am.mappings.email}"></label>
+      <input id="email" type="email" required="true" name="email" th:value="${user.email}" th:placeholder="#{am.form.email.placeholder}"/>
+
+      <label for="institution" th:text="#{am.mappings.institution}"></label>
+      <input id="institution" type="text" disabled="true" th:value="${user.institution}"/>
+
+      <label for="affiliations" th:text="#{am.mappings.affiliations}"></label>
+      <input id="affiliations" type="text" disabled="true" th:value="${user.affiliations}"/>
+
+      <input type="submit" class="button_submit_large"  th:value="#{am.form.profile.submit}"/>
+
+    </form>
+
+
   </div>
 </div>
 

@@ -3,6 +3,7 @@ package am.mail;
 import am.domain.User;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -13,9 +14,8 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
-
-import static java.util.Collections.singletonMap;
 
 public class DefaultMailBox implements MailBox {
 
@@ -32,17 +32,22 @@ public class DefaultMailBox implements MailBox {
   @Override
   public void sendConfirmationMail(User user) {
     try {
-      Map<String, String> variables = new HashMap();
+      Map<String, String> variables = new HashMap<>();
       variables.put("@@unique_invite_link@@", baseUrl + "/confirmation?inviteHash=" + encodeInviteHash(user.getInviteHash()));
       variables.put("@@from@@", from);
-      sendMail("mail/confirmation.html", "SURFConext confirmation", user.getEmail(), variables);
+      variables.put("@@email@@", user.getEmail());
+
+      Locale locale = LocaleContextHolder.getLocale();
+      locale = locale != null ? locale : Locale.ENGLISH;
+
+      sendMail("mail/confirmation_" + locale.getLanguage() + ".html", "SURFConext confirmation", user.getEmail(), variables);
     } catch (MessagingException | IOException e) {
       throw new RuntimeException(e);
     }
   }
 
   private String encodeInviteHash(String inviteHash) throws UnsupportedEncodingException {
-    String replaced = inviteHash.replaceAll("\\+","%2B");
+    String replaced = inviteHash.replaceAll("\\+", "%2B");
     return URLEncoder.encode(replaced, "UTF-8");
   }
 

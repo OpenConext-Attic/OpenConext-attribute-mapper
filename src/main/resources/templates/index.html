@@ -10,8 +10,9 @@
 <div layout:fragment="content">
 
   <section class="welcome">
-    <h3 th:text="#{am.welcome}"></h3>
-    <p th:text="#{am.intro}"></p>
+    <div th:replace="fragments/_landing_info_en :: landing_info_en"></div>
+    <div th:replace="fragments/_landing_info_nl :: landing_info_nl"></div>
+
     <div sec:authorize="!hasRole('ROLE_USER')">
       <a class="button_submit_large" th:text="#{am.login_central_idp}" th:href="@{/saml/login}">Login</a>
     </div>
