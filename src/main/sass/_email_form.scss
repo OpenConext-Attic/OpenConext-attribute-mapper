@@ -9,7 +9,7 @@
     margin-top: 25px;
     margin-bottom: 5px;
     font-weight: bold;
-    color: lighten($dark-grey, 10);
+    color: $medium-grey;
   }
   input[type=text], input[type=email] {
     display: block;

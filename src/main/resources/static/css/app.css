@@ -478,6 +478,11 @@ header {
     @media screen and (max-width: 600px) {
       header .meta .logo {
         display: none; } }
+    @media screen and (max-width: 600px) {
+      header .meta {
+        margin-top: 15px; }
+        header .meta .language {
+          margin: 0px; } }
 
 .button, .button_submit, .button_submit_large, .button_cancel, .button_cancel_large {
   background: #4db3cf;
@@ -491,15 +496,39 @@ header {
   .button:hover, .button_submit:hover, .button_submit_large:hover, .button_cancel:hover, .button_cancel_large:hover {
     background: #319bb8;
     text-decoration: none; }
+  @media screen and (max-width: 600px) {
+    .button, .button_submit, .button_submit_large, .button_cancel, .button_cancel_large {
+      display: inline-block;
+      margin-left: 0px;
+      margin-top: 15px;
+      width: 90%; }
+      .button:first-child, .button_submit:first-child, .button_submit_large:first-child, .button_cancel:first-child, .button_cancel_large:first-child {
+        margin-top: 0px; } }
   .button i, .button_submit i, .button_submit_large i, .button_cancel i, .button_cancel_large i {
     margin-right: 10px; }
 
 .button_submit, .button_submit_large {
   width: 180px;
   font-size: larger; }
+  @media screen and (max-width: 600px) {
+    .button_submit, .button_submit_large {
+      display: inline-block;
+      margin-left: 0px;
+      margin-top: 15px;
+      width: 90%; }
+      .button_submit:first-child, .button_submit_large:first-child {
+        margin-top: 0px; } }
 
 .button_submit_large {
   width: 240px; }
+  @media screen and (max-width: 600px) {
+    .button_submit_large {
+      display: inline-block;
+      margin-left: 0px;
+      margin-top: 15px;
+      width: 90%; }
+      .button_submit_large:first-child {
+        margin-top: 0px; } }
 
 .button_cancel, .button_cancel_large {
   background: #a2a2a2;
@@ -509,6 +538,14 @@ header {
   .button_cancel:hover, .button_cancel_large:hover {
     background: #898989;
     text-decoration: none; }
+  @media screen and (max-width: 600px) {
+    .button_cancel, .button_cancel_large {
+      display: inline-block;
+      margin-left: 0px;
+      margin-top: 15px;
+      width: 90%; }
+      .button_cancel:first-child, .button_cancel_large:first-child {
+        margin-top: 0px; } }
 
 .button_cancel_large {
   width: 140px; }
@@ -642,7 +679,7 @@ nav {
     margin-top: 25px;
     margin-bottom: 5px;
     font-weight: bold;
-    color: #3f5c63; }
+    color: #a2a2a2; }
   .email-form input[type=text], .profile form input[type=text], .email-form input[type=email], .profile form input[type=email] {
     display: block;
     width: 50%;

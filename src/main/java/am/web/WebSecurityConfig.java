@@ -96,6 +96,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Value("${am.certificate}")
   private String amPublicCertificate;
 
+  @Value("${am.entity_base_url}")
+  private String amEntityBaseUrl;
+
   @Value("${am.passphrase}")
   private String amPassphrase;
 
@@ -246,6 +249,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   public MetadataGenerator metadataGenerator() throws NoSuchAlgorithmException, CertificateException, InvalidKeySpecException, KeyStoreException, IOException {
     MetadataGenerator metadataGenerator = new MetadataGenerator();
     metadataGenerator.setEntityId(amEntityId);
+    metadataGenerator.setEntityBaseURL(amEntityBaseUrl);
     metadataGenerator.setExtendedMetadata(extendedMetadata());
     metadataGenerator.setIncludeDiscoveryExtension(false);
     metadataGenerator.setKeyManager(keyManager());

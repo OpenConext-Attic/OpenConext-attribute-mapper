@@ -1,3 +1,17 @@
+@mixin button-responsive() {
+  @media screen and (max-width: $small) {
+    display: inline-block;
+    margin-left: 0px;
+    margin-top: 15px;
+    width: 90%;
+
+    &:first-child {
+      margin-top: 0px;
+    }
+  }
+}
+
+
 .button {
   background: $blue;
   padding: 7px 15px;
@@ -13,6 +27,8 @@
     text-decoration: none;
   }
 
+  @include button-responsive();
+
   i {
     margin-right: 10px;
   }
@@ -23,11 +39,17 @@
   @extend .button;
   width: 180px;
   font-size: larger;
+
+  @include button-responsive();
+
 }
 
 .button_submit_large {
   @extend .button_submit;
   width: 240px;
+
+  @include button-responsive();
+
 }
 
 .button_cancel {
@@ -36,10 +58,14 @@
   color: white;
   border: 1px solid $light-grey;
   margin-left: 15px;
+
   &:hover {
     background: darken($medium-grey, 10);
     text-decoration: none;
   }
+
+  @include button-responsive();
+
 
 }
 .button_cancel_large {

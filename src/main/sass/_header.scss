@@ -96,7 +96,14 @@ header {
         display: none;
       }
     }
+    @media screen and (max-width: $small) {
+      margin-top: 15px;
 
+      .language {
+        margin: 0px;
+      }
+
+    }
   }
 
 }
