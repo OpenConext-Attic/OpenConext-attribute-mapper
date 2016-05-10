@@ -2,9 +2,13 @@ package am.web;
 
 import am.saml.*;
 import am.web.mock.MockAuthenticationFilter;
+import org.apache.catalina.Container;
+import org.apache.catalina.Wrapper;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.velocity.app.VelocityEngine;
+import org.opensaml.saml2.binding.decoding.HTTPPostDecoder;
+import org.opensaml.saml2.binding.encoding.HTTPPostEncoder;
 import org.opensaml.saml2.metadata.provider.MetadataProvider;
 import org.opensaml.saml2.metadata.provider.MetadataProviderException;
 import org.opensaml.xml.parse.ParserPool;
@@ -12,6 +16,9 @@ import org.opensaml.xml.parse.StaticBasicParserPool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
+import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
+import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -136,6 +143,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     samlAuthenticationProvider.setForcePrincipalAsString(false);
     return samlAuthenticationProvider;
   }
+
+//  @Bean
+//  public EmbeddedServletContainerCustomizer servletContainerCustomizer() {
+//    return new EmbeddedServletContainerCustomizer() {
+//
+//      @Override
+//      public void customize(ConfigurableEmbeddedServletContainer container) {
+//        if (container instanceof TomcatEmbeddedServletContainerFactory) {
+//          customizeTomcat((TomcatEmbeddedServletContainerFactory) container);
+//        }
+//      }
+//
+//      private void customizeTomcat(TomcatEmbeddedServletContainerFactory tomcatFactory) {
+//        //tomcatFactory.setProtocol("https");
+//      }
+//    };
+//  }
 
   @Bean
   public SAMLContextProviderImpl contextProvider() {
@@ -334,7 +358,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Bean
   public HTTPPostBinding httpPostBinding() {
-    return new HTTPPostBinding(parserPool(), velocityEngine());
+    ParserPool parserPool = parserPool();
+    HTTPPostDecoder decoder = new HTTPPostDecoder(parserPool);
+    HTTPPostEncoder encoder = new HTTPPostEncoder(velocityEngine(), "/templates/saml2-post-binding.vm");
+
+    decoder.setURIComparator(new DefaultURIComparator());
+    return new HTTPPostBinding(parserPool(), decoder, encoder);
   }
 
   @Bean
