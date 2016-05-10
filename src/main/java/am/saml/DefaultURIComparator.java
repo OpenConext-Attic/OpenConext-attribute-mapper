@@ -12,7 +12,7 @@ public class DefaultURIComparator implements URIComparator {
     try {
       return uri1 == null ? uri2 == null : uri2 == null ? uri1 == null : compareIgnoreSchema(uri1, uri2);
     } catch (URISyntaxException e) {
-      throw new RuntimeException(e);
+      throw new IllegalArgumentException(e);
     }
   }
 

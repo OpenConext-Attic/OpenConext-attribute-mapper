@@ -60,12 +60,12 @@ public class DefaultSAMLUserDetailsServiceTest {
     when(userRepository.findByUnspecifiedId(unSpecifiedId)).thenReturn(Optional.empty());
     when(userRepository.save(any(User.class))).thenAnswer(returnsFirstArg());
 
-    User user = subject.loadUserBySAML(samlCredential(centralIdpEntityId));
+    User user = subject.loadUserBySAML(samlCredential(centralIdpEntityId, false));
 
     assertEquals("urn:collab:person:iden.nl:john.doe", user.getUnspecifiedId());
     assertEquals(singletonList(new SimpleGrantedAuthority("ROLE_USER")), user.getAuthorities());
     assertEquals("http://iden", user.getCentralIdp());
-    assertEquals("M.Doe", user.getUsername());
+    assertEquals("Doe", user.getUsername());
     assertFalse(user.isMapped());
   }
 
@@ -110,16 +110,22 @@ public class DefaultSAMLUserDetailsServiceTest {
   }
 
   private SAMLCredential samlCredential(String entityID) {
+    return samlCredential(entityID, true);
+  }
+
+  private SAMLCredential samlCredential(String entityID, boolean useBankName) {
     NameID nameId = buildSAMLObject(NameID.class, NameID.DEFAULT_ELEMENT_NAME);
     nameId.setValue(nameID);
 
     Assertion assertion = buildSAMLObject(Assertion.class, Assertion.DEFAULT_ELEMENT_NAME);
 
+    String name = useBankName ? "urn:nl:bvn:bankid:1.0:consumer.preferredlastname" : "urn:mace:dir:attribute-def:sn";
+
     List<Attribute> attributes = asList(
       attribute("urn:mace:dir:attribute-def:eduPersonAffiliation", "teacher"),
       attribute("urn:mace:terena.org:attribute-def:schacHomeOrganization", "example.com"),
-      attribute("urn:nl:bvn:bankid:1.0:consumer.initials", "M."),
-      attribute("urn:nl:bvn:bankid:1.0:consumer.preferredlastname", "Doe")
+      attribute("urn:nl:bvn:bankid:1.0:consumer.initials", useBankName ? "M." : ""),
+      attribute(name, "Doe")
     );
 
     return new SAMLCredential(nameId, assertion, entityID, attributes, "N/A");

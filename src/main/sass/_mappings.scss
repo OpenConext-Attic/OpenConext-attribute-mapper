@@ -5,9 +5,9 @@
 
   h3 {
     color: $blue;
-    padding: 35px;
+    padding: 30px;
     margin: 0px;
-    border-bottom: 1px solid $medium-grey;
+    border-bottom: 1px solid $blue;
   }
 
   div.notMapped {
@@ -26,6 +26,12 @@
     section {
       padding: 10px;
       flex: 1;
+      border-left: 1px solid $light-grey;
+
+      &:first-child {
+        border-left: none;
+      }
+
       span:first-child {
         display: block;
         color: $medium-grey;

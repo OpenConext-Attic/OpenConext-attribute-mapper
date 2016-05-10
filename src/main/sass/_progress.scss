@@ -18,10 +18,12 @@
       flex: 1;
       padding: 15px;
       color: $medium-grey;
+      font-size: 16px;
+      font-weight: 300;
       position: relative;
       &.active {
-        color: darken($medium-grey, 5);
-        font-weight: bold;
+        color: darken($medium-grey, 10);
+        font-weight: 400;
         &:before {
           color: white;
         }

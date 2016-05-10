@@ -396,6 +396,8 @@ a {
   box-shadow: 5px 5px 5px 0px #a2a2a2; }
   .box h3, .welcome h3, .mappingsBox h3, div.disconnect h3, .profile h3, .error h3 {
     font-size: 28px;
+    font-weight: 400;
+    text-transform: uppercase;
     color: #4db3cf;
     margin: 0px 0px 15px 0px; }
   .box p, .welcome p, .mappingsBox p, div.disconnect p, .profile p, .error p {
@@ -587,9 +589,9 @@ nav {
   padding: 0px; }
   .mappingsBox h3 {
     color: #4db3cf;
-    padding: 35px;
+    padding: 30px;
     margin: 0px;
-    border-bottom: 1px solid #a2a2a2; }
+    border-bottom: 1px solid #4db3cf; }
   .mappingsBox div.notMapped {
     padding: 50px; }
   .mappingsBox div.mappings {
@@ -601,7 +603,10 @@ nav {
         flex-direction: column; } }
     .mappingsBox div.mappings section {
       padding: 10px;
-      flex: 1; }
+      flex: 1;
+      border-left: 1px solid #efefee; }
+      .mappingsBox div.mappings section:first-child {
+        border-left: none; }
       .mappingsBox div.mappings section span:first-child {
         display: block;
         color: #a2a2a2;
@@ -635,10 +640,12 @@ nav {
     flex: 1;
     padding: 15px;
     color: #a2a2a2;
+    font-size: 16px;
+    font-weight: 300;
     position: relative; }
     .progress section.steps span.active {
-      color: #959595;
-      font-weight: bold; }
+      color: #898989;
+      font-weight: 400; }
       .progress section.steps span.active:before {
         color: white; }
     .progress section.steps span:first-child {
@@ -680,6 +687,13 @@ nav {
     margin-bottom: 5px;
     font-weight: bold;
     color: #a2a2a2; }
+    .email-form label.with-info, .profile form label.with-info {
+      margin-bottom: 2px; }
+  .email-form em, .profile form em {
+    color: #959595;
+    margin-bottom: 2px;
+    display: inline-block;
+    font-size: 12.5px; }
   .email-form input[type=text], .profile form input[type=text], .email-form input[type=email], .profile form input[type=email] {
     display: block;
     width: 50%;
@@ -708,9 +722,9 @@ div.disconnect .button_submit, div.disconnect .button_submit_large {
   padding: 0px; }
   .profile h3 {
     color: #4db3cf;
-    padding: 35px;
+    padding: 30px;
     margin: 0px;
-    border-bottom: 1px solid #a2a2a2; }
+    border-bottom: 1px solid #4db3cf; }
   .profile form {
     padding: 10px 0px 35px 35px; }
 

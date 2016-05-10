@@ -7,6 +7,7 @@ import org.springframework.web.filter.GenericFilterBean;
 
 import javax.servlet.*;
 import java.io.IOException;
+import java.util.Date;
 
 public class MockAuthenticationFilter extends GenericFilterBean {
 
@@ -21,6 +22,7 @@ public class MockAuthenticationFilter extends GenericFilterBean {
     user.setUsername("J.Doe");
     user.setCentralIdp("http://central-idp");
     user.setGrantedAuthorities("ROLE_USER");
+    user.setCreated(new Date());
     switch (step) {
       case "2":
         user.setMapped(true);
@@ -32,6 +34,8 @@ public class MockAuthenticationFilter extends GenericFilterBean {
       case "4":
         user.setInviteHash(null);
         user.setConfirmed(true);
+        user.setEmail("local@test.org");
+        user.setInstitution("example.com");
         break;
       default :
     }

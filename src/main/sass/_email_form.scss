@@ -10,6 +10,15 @@
     margin-bottom: 5px;
     font-weight: bold;
     color: $medium-grey;
+    &.with-info {
+      margin-bottom: 2px;
+    }
+  }
+  em {
+    color: darken($medium-grey, 5);
+    margin-bottom: 2px;
+    display: inline-block;
+    font-size: 12.5px;
   }
   input[type=text], input[type=email] {
     display: block;

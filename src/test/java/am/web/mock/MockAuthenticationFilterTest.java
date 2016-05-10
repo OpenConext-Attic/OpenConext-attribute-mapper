@@ -30,26 +30,27 @@ public class MockAuthenticationFilterTest {
 
   @Test
   public void testDoFilterStep1() throws Exception {
-    User user = doFilter("1");
-    assertFalse(user.isMapped());
+    assertFalse(doFilter("1").isMapped());
   }
 
   @Test
   public void testDoFilterStep2() throws Exception {
-    User user = doFilter("2");
-    assertTrue(user.isMapped());
+    assertTrue(doFilter("2").isMapped());
   }
 
   @Test
   public void testDoFilterStep3() throws Exception {
-    User user = doFilter("3");
-    assertEquals("hash", user.getInviteHash());
+    assertEquals("hash", doFilter("3").getInviteHash());
   }
 
   @Test
   public void testDoFilterStep4() throws Exception {
-    User user = doFilter("4");
-    assertTrue(user.isConfirmed());
+    assertTrue(doFilter("4").isConfirmed());
+  }
+
+  @Test
+  public void testDoFilterStepDefault() throws Exception {
+    assertFalse(doFilter("5").isMapped());
   }
 
   private User doFilter(String step) throws IOException, ServletException {

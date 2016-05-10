@@ -15,4 +15,17 @@ public class DefaultURIComparatorTest {
     String http = "http://attribute-mapper.test.surfconext.nl/saml/SSO";
     assertTrue(subject.compare(https, http));
   }
+
+  @Test
+  public void testNulls() throws Exception  {
+    assertFalse(subject.compare(null, "http://local"));
+    assertFalse(subject.compare("http://local", null));
+
+    assertTrue(subject.compare(null, null));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testInvalidURI() {
+    subject.compare("x!x::invalid", "http://local");
+  }
 }

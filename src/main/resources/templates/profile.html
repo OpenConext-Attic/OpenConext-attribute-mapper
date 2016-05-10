@@ -17,8 +17,10 @@
       <label for="username" th:text="#{am.mappings.name}"></label>
       <input id="username" type="text" disabled="true" th:value="${user.username}"/>
 
-      <label for="email" th:text="#{am.mappings.email}"></label>
-      <input id="email" type="email" required="true" name="email" th:value="${user.email}" th:placeholder="#{am.form.email.placeholder}"/>
+      <label for="email" th:text="#{am.mappings.email}" class="with-info"></label>
+      <em th:text="#{am.mappings.email.info}">info</em>
+      <input id="email" type="email" required="true" name="email"
+             th:value="${user.email}" th:placeholder="#{am.form.email.placeholder}"/>
 
       <label for="institution" th:text="#{am.mappings.institution}"></label>
       <input id="institution" type="text" disabled="true" th:value="${user.institution}"/>
@@ -26,7 +28,7 @@
       <label for="affiliations" th:text="#{am.mappings.affiliations}"></label>
       <input id="affiliations" type="text" disabled="true" th:value="${user.affiliations}"/>
 
-      <input type="submit" class="button_submit_large"  th:value="#{am.form.profile.submit}"/>
+      <input type="submit" class="button_submit_large" th:value="#{am.form.profile.submit}"/>
       <a class="button_cancel" href="/mappings" th:href="@{/mappings}" th:value="#{am.form.profile.cancel}">Cancel</a>
 
     </form>

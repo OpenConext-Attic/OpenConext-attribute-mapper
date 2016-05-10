@@ -34,6 +34,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.saml.*;
 import org.springframework.security.saml.context.SAMLContextProviderImpl;
+import org.springframework.security.saml.context.SAMLContextProviderLB;
 import org.springframework.security.saml.key.JKSKeyManager;
 import org.springframework.security.saml.key.KeyManager;
 import org.springframework.security.saml.log.SAMLDefaultLogger;
@@ -56,6 +57,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.servlet.Filter;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -144,26 +147,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     return samlAuthenticationProvider;
   }
 
-//  @Bean
-//  public EmbeddedServletContainerCustomizer servletContainerCustomizer() {
-//    return new EmbeddedServletContainerCustomizer() {
-//
-//      @Override
-//      public void customize(ConfigurableEmbeddedServletContainer container) {
-//        if (container instanceof TomcatEmbeddedServletContainerFactory) {
-//          customizeTomcat((TomcatEmbeddedServletContainerFactory) container);
-//        }
-//      }
-//
-//      private void customizeTomcat(TomcatEmbeddedServletContainerFactory tomcatFactory) {
-//        //tomcatFactory.setProtocol("https");
-//      }
-//    };
-//  }
-
   @Bean
-  public SAMLContextProviderImpl contextProvider() {
-    return new SAMLContextProviderImpl();
+  public SAMLContextProviderImpl contextProvider() throws URISyntaxException {
+    return new ProxiedSAMLContextProviderLB(new URI(amEntityBaseUrl));
   }
 
   @Bean
