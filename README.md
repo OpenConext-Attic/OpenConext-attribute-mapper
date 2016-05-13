@@ -45,7 +45,7 @@ Without the `dev` modus you will need to login and an attempt is made to actuall
 
 ## [Flow](#flow)
 
-The production flow and the Attribute-Mapper role is depicted in [this image](src/main/resources/static/images/attribute-mapper.001.png).
+The production flow and the Attribute-Mapper role is depicted in [this image](src/main/resources/static/images/attribute-mapper.001.jpeg).
 
 ## [Private signing keys and public certificates](#signing-keys)
 
