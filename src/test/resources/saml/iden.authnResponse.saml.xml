@@ -1,56 +1,37 @@
-<samlp:Response xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol"
-                xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion"
-                ID="_bee7b40c0d48a5e881827e42948c7c66572a1473f0"
-                Version="2.0"
-                IssueInstant="2016-05-04T14:42:35Z"
-                Destination="https://engine.surfconext.nl/authentication/sp/consume-assertion"
-                InResponseTo="CORTO4e7d4415af7952192d6fd703b8c8828d315465e8"
->
+<samlp:Response Destination="https://attribute-mapper.test.surfconext.nl/saml/SSO"
+                ID="_34c2786322614a0af14166a75cec0c54fff15a622f" InResponseTo="a4cff628fb5jfd173h586fi3b55f427"
+                IssueInstant="2016-05-19T07:24:02Z" Version="2.0" xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion"
+                xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol">
   <saml:Issuer>https://idin.surfconext.nl/saml2/idp/metadata.php</saml:Issuer>
   <ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
-    <ds:SignedInfo>
-      <ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
-      <ds:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />
-      <ds:Reference URI="#_bee7b40c0d48a5e881827e42948c7c66572a1473f0">
-        <ds:Transforms>
-          <ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
-          <ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
-        </ds:Transforms>
-        <ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <ds:DigestValue>IzG/XpfGw5YRXoMUI/SAQxaOTkg=</ds:DigestValue>
+    <ds:SignedInfo><ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+      <ds:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+      <ds:Reference URI="#_34c2786322614a0af14166a75cec0c54fff15a622f">
+        <ds:Transforms><ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/><ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/></ds:Transforms><ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+        <ds:DigestValue>rqAT9FLLdu0dREQ7A2yaSQiWXg8=</ds:DigestValue>
       </ds:Reference>
     </ds:SignedInfo>
-    <ds:SignatureValue>tkqOBw4hsN98SctjdV+AqfFkpBbkaeB+nueV7MOIRQ8ASqWOsJPOeuTuuNA21pzVf3eSY4p86Ai+jlIgzp9cgfy4omThsko/f8m21RzvQgODbttQ3PcFd4qayqjVqX/ie7iRNiA63eZyVYoqLaeT6UDhfy/dxhaP/W3HfMbyyoOwMq7FpYa8wlfBWGm2rSC+upyf6f78mYfkOcS236+PawH8HvbxrBw+qTzviSrbVaTpIp/bpohmrO5HNcKWIXZm5wfn6aJDjSQYu6/JKhsuaDcDpiIHf0k9olJ7FLkH4gcJZH5tml5vj49k37N95weDZdWypdAbV356LelhlxzsNw==</ds:SignatureValue>
+    <ds:SignatureValue>Agw5Ohv5QfM6M8DpvbvXCzKjY1fbz+aODkSpHTrc1ROOfKVuIXZrGlD5R3qObrFWhrESLg63FiJ/jOv1cybOP0m66jAnFQsfExsbA0KV6rmdA3mEYSsZaoTmgl+NLvTrVolrzpNigYZE9NhYhUIl+v5R/+tn9eeSEJOZ01KLUyuiTkKeW6bCf1tlvCHGpePtombEWAilifsm00ftT/n1fR/3S8ZtDnDo105SiY0adwXHug3Y8T83cWpTM48g5g6qwqZVzYHQEOg17rEK/B3dhutPdmh8pmRMYcpw3IcdY6OVVocVnQK2rjRyTGbHq4ZGBdzb+75HJ65QH+htfPL0vQ==</ds:SignatureValue>
     <ds:KeyInfo>
       <ds:X509Data>
         <ds:X509Certificate>MIIDITCCAgmgAwIBAgIJAISPaYGJ9hmGMA0GCSqGSIb3DQEBCwUAMCcxJTAjBgNVBAMMHFNBTUwgSURQIFNpZ25pbmcgY2VydGlmaWNhdGUwHhcNMTYwMzEwMDkyMTM2WhcNMTYwNDA5MDkyMTM2WjAnMSUwIwYDVQQDDBxTQU1MIElEUCBTaWduaW5nIGNlcnRpZmljYXRlMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAt1x4CVJOID3XxLhb4NgO7e087QhRJBSUYkZmOXcqU7t3cqJF8HPLdiWFMB9Fo47PSzLvlRAiZ+Gp3abI9MNesqwc67et8IxhKeLBVOfQzdjhfi3/tt2mQfeHn9qFR3wDSDBdoUMSDizpGoj/KZi17L4ZJcrv3AVeMdIr7b/KWA8nXPkNfg+5142mg1V1niMHd+STNWgp1rjS+/NnHDm4grY1jPt8aSorGsCBHnyVId4wTtoZddYgZOjHQ4IsvziWloLj8QWQNWE+316DUb/Pa5yfNMVtR+red9dJOMxnXpF/yd9/Kid+Hz/MkfxoCGqZp7quCUvTY8O226A1siH3CwIDAQABo1AwTjAdBgNVHQ4EFgQUV4HjrhcvxReWlCqJB0yQMM3eQOwwHwYDVR0jBBgwFoAUV4HjrhcvxReWlCqJB0yQMM3eQOwwDAYDVR0TBAUwAwEB/zANBgkqhkiG9w0BAQsFAAOCAQEApbAC/vADC/fiepL4LsJvMI2hIYHuIyRpHvrz2x9LJauRI1YiuQzcsGpnj5IjHZlQ1YO1ZPf1CRcjEr/e4XVZH7MrGc5WCQJ9T3FGeQ9x8N7xf4B7neto2K3sZv+/sVs+OyY6S48x5+7nOnIrzWdggP9FPiVfwIzYjhMmv3IbBGb0fA7su+wKfgzNrivEQidCXjGRwr4Zp2Ec4LzxjEiwxhHE231WFwT2xCDlwDJdq4uxmQDVNvR97rhDiQzsxJjYseT9iu1U/L3UfMb+pGaPMf7kzO0NbVLJYCuzNuIrwPG/hi+PXYFz2n/dXvpOaTucElJQmdJb9aY5KQmKoXgXyw==</ds:X509Certificate>
       </ds:X509Data>
     </ds:KeyInfo>
   </ds:Signature>
-  <samlp:Status>
-    <samlp:StatusCode Value="urn:oasis:names:tc:SAML:2.0:status:Success" />
-  </samlp:Status>
-  <saml:Assertion xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                  ID="_cdefc33b68797981e34151f8a8e5ac83f7e678921c"
-                  Version="2.0"
-                  IssueInstant="2016-05-04T14:42:35Z"
-  >
+  <samlp:Status><samlp:StatusCode Value="urn:oasis:names:tc:SAML:2.0:status:Success"/></samlp:Status>
+  <saml:Assertion ID="_7de490e6ded5d8545b9d91af503bf45be1194a362d" IssueInstant="2016-05-19T07:24:02Z"
+                  Version="2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <saml:Issuer>https://idin.surfconext.nl/saml2/idp/metadata.php</saml:Issuer>
     <ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
-      <ds:SignedInfo>
-        <ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
-        <ds:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />
-        <ds:Reference URI="#_cdefc33b68797981e34151f8a8e5ac83f7e678921c">
-          <ds:Transforms>
-            <ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
-            <ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
-          </ds:Transforms>
-          <ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-          <ds:DigestValue>J+5D5vIk+rIHMt3tv1LDtU91HEk=</ds:DigestValue>
+      <ds:SignedInfo><ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+        <ds:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+        <ds:Reference URI="#_7de490e6ded5d8545b9d91af503bf45be1194a362d">
+          <ds:Transforms><ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/><ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/></ds:Transforms><ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+          <ds:DigestValue>ykv8IMHLhpO12gE9Ai/6D0qZ+sY=</ds:DigestValue>
         </ds:Reference>
       </ds:SignedInfo>
-      <ds:SignatureValue>NudXruMGnChrXbZPIRCbwVnHPMxdmyf0bXZgNp37OibnL3KydwVBsCHINtYER1rJypEXBomrc8nwiWTGlmgI+MfkkeZ6mZ7jOJs4oGuyX1taA5eoxG8QsoX5aFUxxER3b3OFr1rO8AUTgelDJj1Tp0Hp9efWlMp7qh3qUWSkGqjRH0q91oBqEOpBTe0fQITDkfMygvtn4vxnQMKmO7Kr2ynl+shBlQ8kkLuOxuvgYfEYW5PtdEtfOOAESeutLfyryia9eiPV6pWGQTCt1g8v1P49HMHkf3AnRDGEKGGg7Q+PYLaOEPeU6buYIe/JNolxDi2P5FbdjkQlu2LTDcMmUQ==</ds:SignatureValue>
+      <ds:SignatureValue>VACawopzZVOc8/n9g9rXk4Z0HeKrFN/tzT1iM+K6/RQO4q5n2n6PVP6vPpeuL8UZAGsyz/Uz5oPovd9/dx4tkMGnMIepwrQz49W0m9B6uU+wIF2RwGLfAzEkMUCMi+FL6CZ8BGi7lAYBctXbEUR2t+ws1XAvw2/J6PDi5ZeDIWf/fBkQXfkXbMwSPK7fdLjN4AWriX+iOCxJNWVc6afgBpQ3dsJQwjBnHwOtrt/EsqIHNA7ni1dYK4bjvudOQcGTGjYIpAP4CSIxjZHsgyd0/H47lAKg5qCPHqSJ94XNAsHfrYwcgdyO3GXjC5V5zInqlbKWsWwfnyDmaAevAemmfQ==</ds:SignatureValue>
       <ds:KeyInfo>
         <ds:X509Data>
           <ds:X509Certificate>MIIDITCCAgmgAwIBAgIJAISPaYGJ9hmGMA0GCSqGSIb3DQEBCwUAMCcxJTAjBgNVBAMMHFNBTUwgSURQIFNpZ25pbmcgY2VydGlmaWNhdGUwHhcNMTYwMzEwMDkyMTM2WhcNMTYwNDA5MDkyMTM2WjAnMSUwIwYDVQQDDBxTQU1MIElEUCBTaWduaW5nIGNlcnRpZmljYXRlMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAt1x4CVJOID3XxLhb4NgO7e087QhRJBSUYkZmOXcqU7t3cqJF8HPLdiWFMB9Fo47PSzLvlRAiZ+Gp3abI9MNesqwc67et8IxhKeLBVOfQzdjhfi3/tt2mQfeHn9qFR3wDSDBdoUMSDizpGoj/KZi17L4ZJcrv3AVeMdIr7b/KWA8nXPkNfg+5142mg1V1niMHd+STNWgp1rjS+/NnHDm4grY1jPt8aSorGsCBHnyVId4wTtoZddYgZOjHQ4IsvziWloLj8QWQNWE+316DUb/Pa5yfNMVtR+red9dJOMxnXpF/yd9/Kid+Hz/MkfxoCGqZp7quCUvTY8O226A1siH3CwIDAQABo1AwTjAdBgNVHQ4EFgQUV4HjrhcvxReWlCqJB0yQMM3eQOwwHwYDVR0jBBgwFoAUV4HjrhcvxReWlCqJB0yQMM3eQOwwDAYDVR0TBAUwAwEB/zANBgkqhkiG9w0BAQsFAAOCAQEApbAC/vADC/fiepL4LsJvMI2hIYHuIyRpHvrz2x9LJauRI1YiuQzcsGpnj5IjHZlQ1YO1ZPf1CRcjEr/e4XVZH7MrGc5WCQJ9T3FGeQ9x8N7xf4B7neto2K3sZv+/sVs+OyY6S48x5+7nOnIrzWdggP9FPiVfwIzYjhMmv3IbBGb0fA7su+wKfgzNrivEQidCXjGRwr4Zp2Ec4LzxjEiwxhHE231WFwT2xCDlwDJdq4uxmQDVNvR97rhDiQzsxJjYseT9iu1U/L3UfMb+pGaPMf7kzO0NbVLJYCuzNuIrwPG/hi+PXYFz2n/dXvpOaTucElJQmdJb9aY5KQmKoXgXyw==</ds:X509Certificate>
@@ -58,98 +39,72 @@
       </ds:KeyInfo>
     </ds:Signature>
     <saml:Subject>
-      <saml:NameID SPNameQualifier="https://engine.surfconext.nl/authentication/sp/metadata"
-                   Format="urn:oasis:names:tc:SAML:2.0:nameid-format:transient"
-      >_5205fa88e95a0e259e8eb18035f1fa64be4f573fc8</saml:NameID>
-      <saml:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer">
-        <saml:SubjectConfirmationData NotOnOrAfter="2016-05-04T14:47:35Z"
-                                      Recipient="https://engine.surfconext.nl/authentication/sp/consume-assertion"
-                                      InResponseTo="CORTO4e7d4415af7952192d6fd703b8c8828d315465e8"
-        />
-      </saml:SubjectConfirmation>
+      <saml:NameID Format="urn:oasis:names:tc:SAML:2.0:nameid-format:persistent"
+                   SPNameQualifier="https://attribute-mapper.test.surfconext.nl">9cccafcdbcefd2011c2c0126986c26c1b0377d86</saml:NameID>
+      <saml:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer"><saml:SubjectConfirmationData InResponseTo="a4cff628fb5jfd173h586fi3b55f427"
+                                                                                                             NotOnOrAfter="2016-05-19T07:29:02Z" Recipient="https://attribute-mapper.test.surfconext.nl/saml/SSO"/></saml:SubjectConfirmation>
     </saml:Subject>
-    <saml:Conditions NotBefore="2016-05-04T14:42:05Z"
-                     NotOnOrAfter="2016-05-04T14:47:35Z"
-    >
+    <saml:Conditions NotBefore="2016-05-19T07:23:32Z" NotOnOrAfter="2016-05-19T07:29:02Z">
       <saml:AudienceRestriction>
-        <saml:Audience>https://engine.surfconext.nl/authentication/sp/metadata</saml:Audience>
+        <saml:Audience>https://attribute-mapper.test.surfconext.nl</saml:Audience>
       </saml:AudienceRestriction>
     </saml:Conditions>
-    <saml:AuthnStatement AuthnInstant="2016-05-04T14:42:35Z"
-                         SessionNotOnOrAfter="2016-05-04T22:42:35Z"
-                         SessionIndex="_06f888b1c55b5dc1c0c56acc4cf5b563c0a33a2df7"
-    >
+    <saml:AuthnStatement AuthnInstant="2016-05-19T07:12:21Z"
+                         SessionIndex="_070aa8dc7cb61da7850408e3b7711a8d7e1225c6f6"
+                         SessionNotOnOrAfter="2016-05-19T15:12:21Z">
       <saml:AuthnContext>
         <saml:AuthnContextClassRef>urn:oasis:names:tc:SAML:2.0:ac:classes:Password</saml:AuthnContextClassRef>
       </saml:AuthnContext>
     </saml:AuthnStatement>
     <saml:AttributeStatement>
       <saml:Attribute Name="urn:nl:bvn:bankid:1.0:consumer.bin"
-                      NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic"
-      >
+                      NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic">
         <saml:AttributeValue xsi:type="xs:string">NLABNAvacm5gQM4JeMIprJqsMQ8BdWBbUgYg2C2puziauOZVM=</saml:AttributeValue>
       </saml:Attribute>
+      <saml:Attribute Name="urn:nl:bvn:bankid:1.0:consumer.legallastname"
+                      NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic">
+        <saml:AttributeValue xsi:type="xs:string">Harsta</saml:AttributeValue>
+      </saml:Attribute>
       <saml:Attribute Name="urn:nl:bvn:bankid:1.0:consumer.preferredlastname"
-                      NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic"
-      >
+                      NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic">
         <saml:AttributeValue xsi:type="xs:string">Harsta</saml:AttributeValue>
       </saml:Attribute>
       <saml:Attribute Name="urn:nl:bvn:bankid:1.0:consumer.initials"
-                      NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic"
-      >
+                      NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic">
         <saml:AttributeValue xsi:type="xs:string">O.</saml:AttributeValue>
       </saml:Attribute>
       <saml:Attribute Name="urn:nl:bvn:bankid:1.0:consumer.postalcode"
-                      NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic"
-      >
+                      NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic">
         <saml:AttributeValue xsi:type="xs:string">3572TB</saml:AttributeValue>
       </saml:Attribute>
       <saml:Attribute Name="urn:nl:bvn:bankid:1.0:consumer.city"
-                      NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic"
-      >
+                      NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic">
         <saml:AttributeValue xsi:type="xs:string">Utrecht</saml:AttributeValue>
       </saml:Attribute>
       <saml:Attribute Name="urn:nl:bvn:bankid:1.0:consumer.country"
-                      NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic"
-      >
+                      NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic">
         <saml:AttributeValue xsi:type="xs:string">NL</saml:AttributeValue>
       </saml:Attribute>
       <saml:Attribute Name="urn:nl:bvn:bankid:1.0:consumer.street"
-                      NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic"
-      >
+                      NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic">
         <saml:AttributeValue xsi:type="xs:string">Palmstraat</saml:AttributeValue>
       </saml:Attribute>
       <saml:Attribute Name="urn:nl:bvn:bankid:1.0:consumer.houseno"
-                      NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic"
-      >
+                      NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic">
         <saml:AttributeValue xsi:type="xs:string">37</saml:AttributeValue>
       </saml:Attribute>
       <saml:Attribute Name="urn:nl:bvn:bankid:1.0:consumer.dateofbirth"
-                      NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic"
-      >
+                      NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic">
         <saml:AttributeValue xsi:type="xs:string">19730306</saml:AttributeValue>
       </saml:Attribute>
       <saml:Attribute Name="urn:nl:bvn:bankid:1.0:consumer.gender"
-                      NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic"
-      >
+                      NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic">
         <saml:AttributeValue xsi:type="xs:string">1</saml:AttributeValue>
       </saml:Attribute>
       <saml:Attribute Name="urn:nl:bvn:bankid:1.0:bankid.deliveredserviceid"
-                      NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic"
-      >
+                      NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic">
         <saml:AttributeValue xsi:type="xs:string">21968</saml:AttributeValue>
-      </saml:Attribute>
-      <saml:Attribute Name="urn:mace:dir:attribute-def:sn"
-                      NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic"
-      >
-        <saml:AttributeValue xsi:type="xs:string">Harsta</saml:AttributeValue>
-      </saml:Attribute>
-      <saml:Attribute Name="urn:mace:terena.org:attribute-def:schacHomeOrganization"
-                      NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic"
-      >
-        <saml:AttributeValue xsi:type="xs:string">idin.nl</saml:AttributeValue>
       </saml:Attribute>
     </saml:AttributeStatement>
   </saml:Assertion>
 </samlp:Response>
-
