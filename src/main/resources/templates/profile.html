@@ -28,6 +28,11 @@
       <label for="affiliations" th:text="#{am.mappings.affiliations}"></label>
       <input id="affiliations" type="text" disabled="true" th:value="${user.affiliations}"/>
 
+      <div th:if="${environment}">
+        <label for="unspecifiedId" th:text="#{am.mappings.unspecifiedId}"></label>
+        <input id="unspecifiedId" type="text" disabled="true" th:value="${user.unspecifiedId}"/>
+      </div>
+
       <input type="submit" class="button_submit_large" th:value="#{am.form.profile.submit}"/>
       <a class="button_cancel" href="/mappings" th:href="@{/mappings}" th:value="#{am.form.profile.cancel}">Cancel</a>
 
