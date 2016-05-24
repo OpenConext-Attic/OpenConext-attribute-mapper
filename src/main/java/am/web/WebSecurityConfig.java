@@ -164,7 +164,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Bean
   public WebSSOProfileConsumer webSSOprofileConsumer() {
-    return new WebSSOProfileConsumerImpl();
+    WebSSOProfileConsumerImpl ssoProfileConsumer = new WebSSOProfileConsumerImpl();
+    ssoProfileConsumer.setMaxAssertionTime(ssoProfileConsumer.getMaxAssertionTime() * 100);
+    ssoProfileConsumer.setResponseSkew(ssoProfileConsumer.getResponseSkew() * 100);
+    ssoProfileConsumer.setMaxAuthenticationAge(ssoProfileConsumer.getMaxAuthenticationAge() * 100);
+    return ssoProfileConsumer;
   }
 
   @Bean
