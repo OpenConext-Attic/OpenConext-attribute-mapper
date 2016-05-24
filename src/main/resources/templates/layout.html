@@ -35,7 +35,7 @@
         <a href="/mappings" th:href="@{/mappings}" th:text="#{am.menu.mappings}"
            th:class="${menu} == 'mappings' ? 'active' : ''">Mappings</a>
       </li>
-      <li th:if="${step == 4}">
+      <li th:if="${step == 4 || step == 3}">
         <a href="/profile" th:href="@{/profile}" th:text="#{am.menu.profile}"
            th:class="${menu} == 'profile' ? 'active' : ''">Profile</a>
       </li>
