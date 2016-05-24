@@ -38,8 +38,8 @@ public class DefaultSAMLUserDetailsServiceTest {
   private DefaultSAMLUserDetailsService subject;
   private UserRepository userRepository;
 
-  private final String centralIdpEntityId = "http://iden";
-  private final String centralIdpSchacHome = "iden.nl";
+  private final String centralIdpEntityId = "http://idin";
+  private final String centralIdpSchacHome = "idin.nl";
   private final String surfConextIdpEntityId = "http://surfconext";
 
   private final String nameID = "john.doe";
@@ -62,9 +62,9 @@ public class DefaultSAMLUserDetailsServiceTest {
 
     User user = subject.loadUserBySAML(samlCredential(centralIdpEntityId, false));
 
-    assertEquals("urn:collab:person:iden.nl:john.doe", user.getUnspecifiedId());
+    assertEquals("urn:collab:person:idin.nl:john.doe", user.getUnspecifiedId());
     assertEquals(singletonList(new SimpleGrantedAuthority("ROLE_USER")), user.getAuthorities());
-    assertEquals("http://iden", user.getCentralIdp());
+    assertEquals("http://idin", user.getCentralIdp());
     assertEquals("Doe", user.getUsername());
     assertFalse(user.isMapped());
   }
