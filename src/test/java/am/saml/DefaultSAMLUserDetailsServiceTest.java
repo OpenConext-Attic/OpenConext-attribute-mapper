@@ -60,7 +60,7 @@ public class DefaultSAMLUserDetailsServiceTest {
     when(userRepository.findByUnspecifiedId(unSpecifiedId)).thenReturn(Optional.empty());
     when(userRepository.save(any(User.class))).thenAnswer(returnsFirstArg());
 
-    User user = subject.loadUserBySAML(samlCredential(centralIdpEntityId, false));
+    User user = subject.loadUserBySAML(samlCredential(centralIdpEntityId, false, nameID));
 
     assertEquals("urn:collab:person:idin.nl:john.doe", user.getUnspecifiedId());
     assertEquals(singletonList(new SimpleGrantedAuthority("ROLE_USER")), user.getAuthorities());
@@ -100,6 +100,19 @@ public class DefaultSAMLUserDetailsServiceTest {
     assertEquals(singletonList(new SimpleGrantedAuthority("ROLE_MAPPED")), user.getAuthorities());
   }
 
+  @Test
+  public void testLdapEscape() {
+    String uid = "NLABNAvacm5gQM4JeMIprJqsMQ8BdWBbUgYg2C2puziauOZVM=";
+    String urn = String.format(urnFormat, centralIdpSchacHome, uid);
+    String escapedUrn = urn.replaceAll("=", "");
+    when(userRepository.findByUnspecifiedId(escapedUrn)).thenReturn(Optional.empty());
+    when(userRepository.save(any(User.class))).thenAnswer(returnsFirstArg());
+
+    User user = subject.loadUserBySAML(samlCredential(centralIdpEntityId, false, uid));
+
+    assertEquals(escapedUrn, user.getUnspecifiedId());
+  }
+
   @Test(expected = IllegalArgumentException.class)
   public void testUnknownUserAfterSurfConextLogin() {
     SecurityContextHolder.getContext().setAuthentication(new TestingAuthenticationToken(user(), "N/A", "ROLE_USER"));
@@ -110,12 +123,12 @@ public class DefaultSAMLUserDetailsServiceTest {
   }
 
   private SAMLCredential samlCredential(String entityID) {
-    return samlCredential(entityID, true);
+    return samlCredential(entityID, true, nameID);
   }
 
-  private SAMLCredential samlCredential(String entityID, boolean useBankName) {
+  private SAMLCredential samlCredential(String entityID, boolean useBankName, String aNameID) {
     NameID nameId = buildSAMLObject(NameID.class, NameID.DEFAULT_ELEMENT_NAME);
-    nameId.setValue(nameID);
+    nameId.setValue(aNameID);
 
     Assertion assertion = buildSAMLObject(Assertion.class, Assertion.DEFAULT_ELEMENT_NAME);
 
@@ -125,7 +138,8 @@ public class DefaultSAMLUserDetailsServiceTest {
       attribute("urn:mace:dir:attribute-def:eduPersonAffiliation", "teacher"),
       attribute("urn:mace:terena.org:attribute-def:schacHomeOrganization", "example.com"),
       attribute("urn:nl:bvn:bankid:1.0:consumer.initials", useBankName ? "M." : ""),
-      attribute(name, "Doe")
+      attribute(name, "Doe"),
+      attribute("urn:mace:dir:attribute-def:uid", aNameID)
     );
 
     return new SAMLCredential(nameId, assertion, entityID, attributes, "N/A");

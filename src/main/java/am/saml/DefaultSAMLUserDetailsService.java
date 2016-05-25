@@ -2,6 +2,7 @@ package am.saml;
 
 import am.domain.User;
 import am.repository.UserRepository;
+import org.opensaml.saml2.core.Attribute;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.saml.SAMLCredential;
 import org.springframework.security.saml.userdetails.SAMLUserDetailsService;
 import org.springframework.stereotype.Service;
+
+import javax.naming.ldap.Rdn;
 
 import static java.lang.String.format;
 
@@ -46,7 +49,8 @@ public class DefaultSAMLUserDetailsService implements SAMLUserDetailsService {
 
   @Override
   public User loadUserBySAML(SAMLCredential credential) {
-    String localUsername = credential.getNameID().getValue();
+    String localUsername = getUid(credential);
+
     String urn = format(urnFormat, centralIdpSchacHome, localUsername);
 
     String remoteEntityID = credential.getRemoteEntityID();
@@ -56,6 +60,14 @@ public class DefaultSAMLUserDetailsService implements SAMLUserDetailsService {
       (isSurfConextIdpAuthnResponse(remoteEntityID) ? fromSurfConextIdp(credential) :
 
         unrecognisedAuthnStatement(remoteEntityID, credential));
+  }
+
+  private String getUid(SAMLCredential credential) {
+    String uid = credential.getAttributeAsString("urn:mace:dir:attribute-def:uid");
+    if (uid == null) {
+      uid = credential.getNameID().getValue();
+    }
+    return uid.replaceAll("=","");
   }
 
   private User fromCentralIdp(String urn, SAMLCredential credential) {
