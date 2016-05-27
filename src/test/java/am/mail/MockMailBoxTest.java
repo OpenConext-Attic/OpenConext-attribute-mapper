@@ -23,7 +23,22 @@ public class MockMailBoxTest extends AbstractIntegrationTest {
   public final GreenMailRule greenMail = new GreenMailRule(ServerSetupTest.ALL);
 
   @Test
+  public void testDoSendMailOn() throws Exception {
+    doSendMail();
+  }
+
+  @Test
   public void testDoSendMail() throws Exception {
+    String osName = System.getProperty("os.name");
+
+    System.setProperty("os.name", "bogus");
+
+    doSendMail();
+
+    System.setProperty("os.name", osName);
+  }
+
+  private void doSendMail() throws InterruptedException {
     User user = new User();
     user.setEmail("t@t.org");
     user.setInviteHash("hash");

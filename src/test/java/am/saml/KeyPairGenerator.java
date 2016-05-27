@@ -1,12 +1,14 @@
 package am.saml;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import sun.security.tools.keytool.CertAndKeyGen;
 import sun.security.x509.X500Name;
 
 import java.io.IOException;
-import java.security.*;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.SignatureException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.Base64;

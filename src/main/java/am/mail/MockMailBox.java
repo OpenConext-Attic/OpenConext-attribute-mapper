@@ -23,9 +23,9 @@ public class MockMailBox extends DefaultMailBox {
   protected void setText(String html, MimeMessageHelper helper) throws MessagingException {
     try {
       String osName = System.getProperty("os.name").toLowerCase();
-//      if (osName.contains("mac os x")) {
+      if (osName.contains("mac os x")) {
         openInBrowser(html);
-//      }
+      }
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
