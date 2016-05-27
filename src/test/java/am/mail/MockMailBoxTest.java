@@ -27,17 +27,6 @@ public class MockMailBoxTest extends AbstractIntegrationTest {
     doSendMail();
   }
 
-  @Test
-  public void testDoSendMail() throws Exception {
-    String osName = System.getProperty("os.name");
-
-    System.setProperty("os.name", "bogus");
-
-    doSendMail();
-
-    System.setProperty("os.name", osName);
-  }
-
   private void doSendMail() throws InterruptedException {
     User user = new User();
     user.setEmail("t@t.org");
