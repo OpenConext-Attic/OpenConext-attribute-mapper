@@ -50,7 +50,13 @@ The production flow and the Attribute-Mapper role is depicted in [this image](sr
 ## [Private signing keys and public certificates](#signing-keys)
 
 The SAML Spring Security library needs a private DSA key and the public certificates of the IdentityProviders. The public certificates can be copied
-from the metadata. The private / public key for the Attribute-Mapper SP can be generated:
+from the metadata.
+
+```bash
+mvn -Dtest=am.saml.KeyPairGenerator test
+```bash
+
+Or you can generate the private / public key for the Attribute-Mapper SP with openssl:
  
 ```bash
 openssl req -subj '/O=Organization, CN=AttributeMapper/' -newkey rsa:2048 -new -x509 -days 3652 -nodes -out oidc.crt -keyout am.pem
