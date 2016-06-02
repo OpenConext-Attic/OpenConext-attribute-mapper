@@ -92,7 +92,7 @@ public class DefaultSAMLUserDetailsService implements SAMLUserDetailsService {
   }
 
   private User unrecognisedAuthnStatement(String remoteEntityID, SAMLCredential credential) {
-    throw new IllegalArgumentException(format("Unrecognised Authn Response {} {}", remoteEntityID, credential));
+    throw new IllegalArgumentException(format("Unrecognised Authn Response %s %s", remoteEntityID, credential));
   }
 
   private User parseUserFromCentralIdpResponse(String urn, SAMLCredential credential) {
