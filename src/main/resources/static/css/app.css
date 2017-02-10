@@ -632,6 +632,7 @@ nav {
   border-radius: 50%;
   text-align: center;
   left: -12px; }
+
 .progress section.steps {
   display: flex;
   padding: 0px;
@@ -656,8 +657,9 @@ nav {
       content: '2'; }
     .progress section.steps span:last-child:before {
       content: '3'; }
+
 .progress .progress-ind {
-  margin: 0px 49px;
+  margin: 0 49px;
   background-color: #efefee;
   box-shadow: 1px 1px 1px 0px #a2a2a2;
   position: relative;
@@ -732,5 +734,3 @@ div.disconnect .button_submit, div.disconnect .button_submit_large {
   text-align: center; }
   .error.notFound p {
     font-size: 96px; }
-
-/*# sourceMappingURL=app.css.map */

@@ -13,6 +13,7 @@ not connected to the home institution of the user.
 - Java 7
 - Maven 3
 - MySQL 5.5+
+- npm
 
 ### [Create database](#create-database)
 
@@ -42,6 +43,25 @@ http://localhost:8080/mappings?step=2
 ```
 
 Without the `dev` modus you will need to login and an attempt is made to actually send emails for conformation.
+
+The application uses node-sass to compile the sass to css. First install the dependencies:
+
+```bash
+npm install
+```
+
+Then you can generate the css with:
+
+```bash
+npm run build-css
+```
+
+Or use nodemon to watch the scss files:
+
+```bash
+npm run watch-scss
+```
+
 
 ## [Flow](#flow)
 
