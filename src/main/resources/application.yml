@@ -51,12 +51,14 @@ am:
 
 spring:
   datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mysql://localhost/attribute_mapper?autoReconnect=true&useSSL=false
     username: root
     password:
-    driverClassName: com.mysql.jdbc.Driver
-    validation-query: SELECT 1
-    testWhileIdle: true
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      connection-test-query: SELECT 1
+      leak-detection-threshold: 2000
   mvc:
     favicon:
       enabled: false
